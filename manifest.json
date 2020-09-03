@@ -1,0 +1,26 @@
+{
+     "name" : "Huflit",
+     "icons" : {
+          "16" : "assets/img/huflit.png",
+          "32" : "assets/img/huflit.png",
+          "48" : "assets/img/huflit.png",
+          "64" : "assets/img/huflit.png",
+          "128" : "assets/img/huflit.png"
+     },
+     "description" : "Huflit Extension",
+     "omnibox": { "keyword" : "yeah" },
+     "version" : "1.0",
+     "manifest_version" : 2,
+     "permissions" : [
+          "http://portal.huflit.edu.vn/",
+          "https://api-huflit.herokuapp.com/*",
+          "storage"
+     ],
+     "background" : {
+          "scripts": ["/assets/modules/background.js"],
+          "persistent": false
+     },
+     "browser_action": {
+          "default_popup": "popup.html"
+     }
+}

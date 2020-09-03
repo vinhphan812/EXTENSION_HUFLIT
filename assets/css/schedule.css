@@ -1,0 +1,87 @@
+.day{
+     list-style-type: none;
+     display: flex;
+     padding: 0;
+     margin: 10px 0 0 0;
+     justify-content: center;
+     text-align: center;
+     font-size: 12px;    
+}
+.thu{
+     width: 55px;
+     height: 30px;
+     line-height: 30px;
+     flex-grow: 1;
+     cursor: pointer;
+     color: #f56e2b;
+     border: 1px solid #f56e2b;
+}
+.on{
+     display: flex;
+     justify-content: start;
+     flex-direction: column;
+}
+.render{
+     height: 260px;
+     position: relative;
+}
+
+.off{
+     display: none;
+}
+
+.active{
+     background-color: #f56e2b;
+     color: #fff;
+}
+
+.render .off, .on{
+     position: absolute;               
+     height: 100%;
+     width: 100%;
+     top: 0;
+     left: 0;            
+     flex-wrap: wrap;        
+}
+
+.off p, .on p{
+     align-self: center;
+     margin: auto;
+     font-size: 30px;
+     font-weight: bolder;
+     color: #f56e2b45;
+     text-align: center;
+}
+
+.subject{
+     display: flex;    
+     align-items: center;
+     height: 40px;
+     margin: 5px 10px 0 10px;
+     background-color: #f56e2b;
+     color: #fff;
+     border-radius: 20px;
+     box-shadow: 0 0 5px 0 #333;
+}      
+.tiet{
+     font-size: 30px;
+}
+.tiet, .phong{
+     width: 50px;
+     text-align: center;
+}         
+.phong{
+     font-size: 12px;
+}
+.info{
+     display: flex;
+     flex-direction: column;
+     flex-grow: 1;
+}
+.info .mon{
+     font-size: 18px;
+     font-weight: 400;
+}
+.info .giaovien{
+     color: #efefef;
+}
