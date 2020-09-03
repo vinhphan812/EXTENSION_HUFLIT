@@ -1,6 +1,6 @@
 # HUFLIT EXTENSION
 
-## Install
+## Installation
 
 ```bash
      B1: Tải và giải nén folder.
@@ -14,7 +14,7 @@
 ```bash
      B4: Click chọn "tải tiện ích đã được giải nén" và chọn đường dẫn đến folder giải nén ban nảy.
 ```
-
+### author 
 [Phan Thanh Vinh](https://www.facebook.com/id.24.10.2001.788)
 
      
