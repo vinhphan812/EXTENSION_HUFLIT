@@ -1,24 +1,26 @@
 function renderSchedule(schedule){
      const date = new Date();
      var today = date.getDay() + 1 == 1 ? 8 : date.getDay() + 1;
+     ///check main contain in #DOM
      if(!DOM.childElementCount || DOM.children[0].className != 'day')
           ScheduleMain(); // render main schedule as: list day of week and render data
 
      for(var i = 2; i <= 8; i++){
           var elThu = document.getElementById(i);
           var dataDay = schedule.filter(function(item){return item.Thu == i});
+          
           elThu.classList.add('thu');
 
           if(dataDay.length == 0)
-               dataDay = today == i ? "<p> Hôm nay rãnh nè đi nhậu đi...!</p>" : "<p>Trống...!</p>";
+               dataDay = today == i ? "<p class='textCenter'> Hôm nay rãnh nè đi nhậu đi...!</p>" : "<p class='textcenter'>Trống...!</p>";
           else{
                if(dataDay.length >= 2)
                     dataDay = dataDay.sort(function(a, b){
                          return parseInt(a.TietHoc.split(' - ')[0].trim()) - parseInt(b.TietHoc.split(' - ')[0].trim());
                     })
-               dataDay = dataDay.map(function(item){return '<div class="subject"><div class="tiet">' + item.TietHoc.split(' - ')[1].trim() + "</div><div class='info'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong">' + item.Phong  + '</></div>'});
+               dataDay = dataDay.map(function(item){return '<div class="subject flex"><div class="tiet textCenter">' + item.TietHoc.split(' - ')[1].trim() + "</div><div class='info flex'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong textCenter">' + item.Phong  + '</></div>'});
           }         
-          document.getElementById('t' + i).className = today == i ? 'on' : 'off';
+          document.getElementById('t' + i).className = today == i ? 'on flex' : 'off';
           document.getElementById('t'+ i).innerHTML = typeof dataDay == 'object' ? dataDay.join('') : dataDay;
           elThu.addEventListener('click',function(ev){
                for(var i = 2; i <= 8; i++)
@@ -27,7 +29,7 @@ function renderSchedule(schedule){
                     document.getElementById(i).className = 'thu';
                }
                this.className += ' active'
-               document.getElementById('t'+this.id).className = 'on';
+               document.getElementById('t'+this.id).className = 'on flex';
           })
      }
      document.getElementById(today).textContent = "Hôm nay"; 
@@ -45,7 +47,9 @@ function ScheduleMain(){
 
      render.classList.add('render');
      render.id = 'render';
-     day.classList.add('day')
+     day.classList.add('day');
+     day.classList.add('flex');
+     day.classList.add('textCenter');
      document.getElementById('DOM').appendChild(day);  //DOM list day of week
      document.getElementById('DOM').appendChild(render); // DOM render data
      for(var i = 2; i <= 8; i++){

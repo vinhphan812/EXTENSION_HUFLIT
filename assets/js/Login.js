@@ -1,12 +1,12 @@
-const DOM = document.getElementById('DOM');
-const logo = document.getElementById('logo');
-const Menu = document.getElementById('menu');
-const main = document.getElementById('main');
-const login = document.getElementById('login');
-const inpUser = document.getElementById('user');
-const inpPass = document.getElementById('pass');
-var LoginUser, LoginPass;
-var xhr = new XMLHttpRequest();
+const DOM = document.getElementById('DOM'); // div DOM data 
+const logo = document.getElementById('logo'); // transition logo
+const Menu = document.getElementById('menu'); // Menu user after Login
+const main = document.getElementById('main'); // div all element
+const inpUser = document.getElementById('user'); // input user
+const inpPass = document.getElementById('pass'); // input pass
+
+var LoginUser, LoginPass; // variable user and pass for Login 
+var xhr = new XMLHttpRequest(); // create XHR request API
 
 
 
@@ -22,7 +22,7 @@ chrome.storage.local.get(['cookie'], function(result){
      }
      else
      {
-          login.addEventListener('click', function(event){
+          document.getElementById('login').addEventListener('click', function(event){
                Login();
           });
           
@@ -43,12 +43,8 @@ function checkCookie(cookie){
 
      isDisabled(true)
      xhr.addEventListener('readystatechange', resCookie)
-     
-     xhr.open("POST", "https://api-huflit.herokuapp.com/CheckCookie");
-     xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-     xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8")
-     xhr.send(data);
+     xhrRequest('checkCookie', data);
+
 }
 
 
@@ -84,27 +80,21 @@ function resCookie(event){
 function Login(user, pass){
      const msg = document.getElementById('msg');
 
-     LoginUser = user || inpUser.value;
-     LoginPass = pass || inpPass.value;
+     LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
+     LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
      msg.innerText = "";
 
-     isDisabled(true);
+     isDisabled(true); // disabled input and button when variable is true
 
-     if(LoginUser == "" || LoginPass == "")
+     if(LoginUser == "" || LoginPass == "") // if LoginUser or PassUser are equal to "", formLogin is display
      {
-          isDisabled(false);
+          isDisabled(false); // not disable input and button when variable is false
           msg.innerText = "Enter user or pass";
           return;
      }
      
-     var data = "user=" + LoginUser + "&pass=" + LoginPass;
+     var data = "user=" + LoginUser + "&pass=" + LoginPass; // set data request formData --> x-www-form-urlencoded
      xhr.addEventListener('readystatechange', DOMLogin);
-     xhr.open("POST", "https://api-huflit.herokuapp.com/profile");
-
-     xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-     xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8")
-
-     xhr.send(data);
+     xhrRequest('profile', data)
 }
 

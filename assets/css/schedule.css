@@ -1,10 +1,8 @@
 .day{
      list-style-type: none;
-     display: flex;
      padding: 0;
      margin: 10px 0 0 0;
      justify-content: center;
-     text-align: center;
      font-size: 12px;    
 }
 .thu{
@@ -17,7 +15,6 @@
      border: 1px solid #f56e2b;
 }
 .on{
-     display: flex;
      justify-content: start;
      flex-direction: column;
 }
@@ -50,11 +47,9 @@
      font-size: 30px;
      font-weight: bolder;
      color: #f56e2b45;
-     text-align: center;
 }
 
 .subject{
-     display: flex;    
      align-items: center;
      height: 40px;
      margin: 5px 10px 0 10px;
@@ -68,13 +63,11 @@
 }
 .tiet, .phong{
      width: 50px;
-     text-align: center;
 }         
 .phong{
      font-size: 12px;
 }
 .info{
-     display: flex;
      flex-direction: column;
      flex-grow: 1;
 }

@@ -9,12 +9,7 @@ function Schedule(){
                     if(this.readyState == 4)
                          renderSchedule(JSON.parse(this.responseText));
                })
-
-               xhr.open('POST', 'https://api-huflit.herokuapp.com/Schedules')
-               xhr.setRequestHeader('Access-Control-Allow-Origin', "*");
-               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-               xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8");
-               xhr.send(data);
+               xhrRequest('Schedules', data);
           })
 }
 /// + ChangePassword
@@ -25,7 +20,7 @@ function ChangePassword(){
      DOM.style.transform = 'translateY(10px)';
 
      setTimeout(function(){
-          DOM.innerHTML = '<div class="form" id="form"><div class="box"><input type="password" id="pw1" required><label>Mật khẩu mới</label></div><input type="checkbox" id="check"><layer>hiển thị mật khẩu</layer></div><layer id="msg"></layer><button id="update">cập nhật</button>';
+          DOM.innerHTML = '<div class="form" id="form flex"><div class="box"><input type="password" id="pw1" required><label>Mật khẩu mới</label></div><input type="checkbox" id="check"><layer>hiển thị mật khẩu</layer></div><layer id="msg"></layer><button id="update">cập nhật</button>';
           DOM.style.opacity = 1;
           DOM.style.transform = 'translateY(0px)';
 
@@ -63,11 +58,7 @@ function Change(){
                               DOM.innerHTML = '<p style="display: flex; justify-content: center; color: #1e7900; font-weight: bold;">' + this.responseText + '</p>';
                          }        
                     });
-                    xhr.open('POST', 'https://api-huflit.herokuapp.com/ChangePass')
-                    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8")
-                    xhr.send(data);
+                    xhrRequest('ChangePass', data);
                }
           })
 }

@@ -9,6 +9,7 @@ function isDone(data){
 
      document.body.style.height = '500px';
 
+     //remove event xhr Login and check cookie 
      document.removeEventListener('keyup', function(event){
           if(event.key == 'Enter')
                Login();
@@ -17,8 +18,12 @@ function isDone(data){
      login.removeEventListener('click', function(event){
           Login();
      });
+
+     xhr.removeEventListener('readystatechange', resCookie);
+     xhr.removeEventListener('readystatechange', DOMLogin);
+
      //DOM username
-     Menu.innerHTML = '<div class="user"><img src="/assets/img/user.png"><p>' + data + '</p></div><ul class="menu">' + liMenu.join('') + '</ul>';
+     Menu.innerHTML = '<div class="user flex"><img src="/assets/img/user.png"><p>' + data + '</p></div><ul class="menu flex">' + liMenu.join('') + '</ul>';
      //DOM menu list
      document.getElementById('Schedules').addEventListener('click', Schedule);
      document.getElementById('ChangePassword').addEventListener('click', ChangePassword);
@@ -40,14 +45,16 @@ function DOMLogin(event){
      {
           var res = JSON.parse(this.responseText);
 
-          if(res.isDone){
-               isDone(res.name);
+          if(res.isDone){ 
+               isDone(res.name); // DOM user and menu
+               // save data user, pass, cookie 
                chrome.storage.local.set({cookie: res.cookie, user: LoginUser, pass: LoginPass}, function(){
                     console.log('save success');
                });
           }
           else{
                isDisabled(false);
+               // DOM messenger error 
                msg.innerText = res.msg;
           }
      }
@@ -62,10 +69,7 @@ function isDisabled(flag){
           stopLoading();     
 }
 
-function onLoading(){
-     DOM.innerHTML = '<div id="loader"><img src="assets/img/loading.png"></div>';
-}
-
+// stop action loading 
 function stopLoading(){
      main.style.filter = 'none';
      main.style.opacity = 1;
@@ -74,4 +78,15 @@ function stopLoading(){
      DOM.style.transform = 'translateY(0px)';
      logo.style.opacity = 1;
      logo.style.transform = 'translateY(0px)';
+}
+
+// make request server API 
+function xhrRequest(uri, data){    
+     xhr.open("POST", "https://api-huflit.herokuapp.com/" + uri);
+
+     xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+     xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8")
+     
+     xhr.send(data);
 }

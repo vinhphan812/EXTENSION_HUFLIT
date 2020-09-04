@@ -9,8 +9,15 @@ body{
      transition: width linear 400ms, height linear 400ms;
 }
 
-#loader{
+.flex{
      display: flex;
+}
+
+.textCenter{
+     text-align: center;
+}
+
+#loader{
      align-items: center;
      justify-content: center;
      position: absolute;
@@ -43,7 +50,6 @@ body{
 
 .menu{
      list-style-type: none;
-     display: flex;
      align-items: center;
      justify-content: space-evenly;
      margin: 0;
@@ -93,7 +99,6 @@ body{
 }
 
 .user{
-     display: flex;
      justify-content: center;
      margin: 5px;
 }
@@ -117,10 +122,9 @@ button{
      box-shadow: 0 0 5px 0 #8a1225;
 }
 .form{
-     display: flex;
      align-items: center;
-     margin: 10px;
      justify-content: center;
+     margin: 10px;
 }
 
 layer{
