@@ -20,7 +20,7 @@ function ChangePassword(){
      DOM.style.transform = 'translateY(10px)';
 
      setTimeout(function(){
-          DOM.innerHTML = '<div class="form" id="form flex"><div class="box"><input type="password" id="pw1" required><label>Mật khẩu mới</label></div><input type="checkbox" id="check"><layer>hiển thị mật khẩu</layer></div><layer id="msg"></layer><button id="update">cập nhật</button>';
+          DOM.innerHTML = '<div class="form flex" id="form"><div class="box"><input type="password" id="pw1" required><label>Mật khẩu mới</label></div><input type="checkbox" id="check"><layer>hiển thị mật khẩu</layer></div><layer id="msg"></layer><button id="update">cập nhật</button>';
           DOM.style.opacity = 1;
           DOM.style.transform = 'translateY(0px)';
 

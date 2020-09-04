@@ -64,9 +64,7 @@ function DOMLogin(event){
 function isDisabled(flag){
      inpUser.disabled = flag;
      inpPass.disabled = flag;
-     login.disabled = flag;
-     if(!flag)
-          stopLoading();     
+     login.disabled = flag;          
 }
 
 // stop action loading 
