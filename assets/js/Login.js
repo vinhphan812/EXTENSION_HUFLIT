@@ -55,7 +55,6 @@ function resCookie(event){
      {
           var res = JSON.parse(this.responseText);
           if(res.isDone){
-               stopLoading();
                isDone(res.name);
           }
           else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
@@ -67,6 +66,7 @@ function resCookie(event){
                     {
                          // if user or pass is change --> display login form 
                          isDisabled(false);
+                         stopLoading();
                          return;
                     }
                     
@@ -82,7 +82,8 @@ function Login(user, pass){
 
      LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
      LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
-     msg.innerText = "";
+     if(msg)
+          msg.innerText = "";
 
      isDisabled(true); // disabled input and button when variable is true
 
@@ -94,7 +95,11 @@ function Login(user, pass){
      }
      
      var data = "user=" + LoginUser + "&pass=" + LoginPass; // set data request formData --> x-www-form-urlencoded
+
+     xhr.removeEventListener('readystatechange', resCookie);
+
      xhr.addEventListener('readystatechange', DOMLogin);
+
      xhrRequest('profile', data)
 }
 

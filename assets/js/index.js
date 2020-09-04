@@ -6,7 +6,9 @@ function isDone(data){
      var liMenu = dataMenu.map(function(item){
           return '<li class="itemMenu" id="' + item[0] + '"><img class="icon" src="/assets/img/' + item[0] + '.png"><span>' + item[1] + '</span></li>'
      })
-
+     if(document.getElementById('loader'))
+          stopLoading();
+          
      document.body.style.height = '500px';
 
      //remove event xhr Login and check cookie 
@@ -21,6 +23,7 @@ function isDone(data){
 
      xhr.removeEventListener('readystatechange', resCookie);
      xhr.removeEventListener('readystatechange', DOMLogin);
+     
 
      //DOM username
      Menu.innerHTML = '<div class="user flex"><img src="/assets/img/user.png"><p>' + data + '</p></div><ul class="menu flex">' + liMenu.join('') + '</ul>';
