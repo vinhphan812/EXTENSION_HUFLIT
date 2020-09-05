@@ -1,5 +1,9 @@
 # HUFLIT EXTENSION
 
+## Description
+     API HUFLIT SERVER HUFLIT ACTIVE ON ADDRESS "https://api-huflit.herokuapp.com/".
+     HUFLIT_EXTENSION INCLUDES KNOWLEDGES: HTML, CSS, JS, XMLHTTPREQUEST (CALL API)
+
 ## Installation
 
 ```bash
