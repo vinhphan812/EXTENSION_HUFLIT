@@ -8,6 +8,7 @@
 
 ```bash
      B1: Tải và giải nén folder.
+         git clone https://github.com/vinhphan812/EXTENSION_HUFLIT.git
 ```
 ```bash
      B2: Mở chrome vào mục tiện ích mở rộng. url: "chrome://extensions/".
