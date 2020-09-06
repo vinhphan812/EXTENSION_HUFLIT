@@ -6,8 +6,8 @@ function Schedule(){
           chrome.storage.local.get(['cookie'], function(res){
                var data = 'cookie=' + res.cookie;
                xhr.addEventListener('readystatechange', function(event){
-                    if(this.readyState == 4)
-                         renderSchedule(JSON.parse(this.responseText));
+                         if(this.readyState == 4 && this.responseURL.indexOf('Schedules') >= 0)
+                              renderSchedule(JSON.parse(this.responseText));
                })
                xhrRequest('Schedules', data);
           })
@@ -54,8 +54,8 @@ function Change(){
                     chrome.storage.local.set({pass: pw1.value});
                     var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
                     xhr.addEventListener('readystatechange', function (event){
-                         if(this.readyState === 4){
-                              DOM.innerHTML = '<p style="display: flex; justify-content: center; color: #1e7900; font-weight: bold;">' + this.responseText + '</p>';
+                         if(this.readyState === 4 && this.responseURL.indexOf('ChangePass') >= 0){
+                              DOM.innerHTML = '<div style="display: flex;flex-direction: column;justify-content: center;color: #1e7900;align-items: center;height: 100%;font-weight: bold;"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
                          }        
                     });
                     xhrRequest('ChangePass', data);
