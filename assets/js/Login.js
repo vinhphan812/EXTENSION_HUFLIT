@@ -22,15 +22,7 @@ chrome.storage.local.get(['cookie'], function(result){
      }
      else
      {
-          document.getElementById('login').addEventListener('click', function(event){
-               Login();
-          });
-          
-          document.addEventListener('keyup', function(event){
-               if(event.key == 'Enter')
-                    Login();
-          });
-          stopLoading();
+          inputLogin();          
           return;
      }
 });
@@ -39,12 +31,15 @@ chrome.storage.local.get(['cookie'], function(result){
 // cookie will request to API
 // response isDone = true | false
 function checkCookie(cookie){
-     var data = 'cookie=' + cookie;
+     try {
+          var data = 'cookie=' + cookie;
 
-     isDisabled(true)
-     xhr.addEventListener('readystatechange', resCookie)
-     xhrRequest('checkCookie', data);
-
+          isDisabled(true);
+          xhr.addEventListener('readystatechange', resCookie)
+          xhrRequest('checkCookie', data);
+     } catch (error) {
+          inputLogin();
+     }
 }
 
 
@@ -103,3 +98,14 @@ function Login(user, pass){
      xhrRequest('profile', data)
 }
 
+function inputLogin(){
+     document.getElementById('login').addEventListener('click', function(event){
+          Login();
+     });
+     
+     document.addEventListener('keyup', function(event){
+          if(event.key == 'Enter')
+               Login();
+     });
+     stopLoading();
+}

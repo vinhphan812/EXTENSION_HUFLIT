@@ -11,8 +11,8 @@
      line-height: 30px;
      flex-grow: 1;
      cursor: pointer;
-     color: #f56e2b;
-     border: 1px solid #f56e2b;
+     color: #2DB8AE;
+     border: 1px solid #2DB8AE;
 }
 .on{
      justify-content: start;
@@ -28,7 +28,7 @@
 }
 
 .active{
-     background-color: #f56e2b;
+     background-color: #2DB8AE;
      color: #fff;
 }
 
@@ -38,7 +38,8 @@
      width: 100%;
      top: 0;
      left: 0;            
-     flex-wrap: wrap;        
+     flex-wrap: wrap; 
+     padding-top: 10px;       
 }
 
 .off p, .on p{
@@ -46,20 +47,22 @@
      margin: auto;
      font-size: 30px;
      font-weight: bolder;
-     color: #f56e2b90;
+     color: #2DB8AE90;
 }
 
 .subject{
      align-items: center;
      height: 40px;
-     margin: 5px 10px 0 10px;
-     background-color: #f56e2b;
+     background-color: #2DB8AE;
      color: #fff;
-     border-radius: 20px;
-     box-shadow: 0 0 5px 0 #333;
+     margin: 0 10px 0 10px;
+     border-bottom: 1px solid #d3d3d3;
+     /* border-radius: 20px;
+     box-shadow: 0 0 5px 0 #333; */
 }      
 .tiet{
-     font-size: 30px;
+     font-size: 18px;
+     margin: 0 5px;
 }
 .tiet, .phong{
      width: 50px;

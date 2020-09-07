@@ -1,3 +1,7 @@
+const periodBoard = {
+     1: '6h45', 2: '7h35', 3: '8h25', 4: '9h30', 5: '10h20', 6: '11h10', 7: '12h45', 8: '13h35', 9: '14h25', 10: '15h30', 11: '16h20', 12: '17h10', 13: '18h15', 14: '19h05', 15: '19h55',
+}
+
 function renderSchedule(schedule){
      const date = new Date();
      var today = date.getDay() + 1 == 1 ? 8 : date.getDay() + 1;
@@ -18,7 +22,7 @@ function renderSchedule(schedule){
                     dataDay = dataDay.sort(function(a, b){
                          return parseInt(a.TietHoc.split(' - ')[0].trim()) - parseInt(b.TietHoc.split(' - ')[0].trim());
                     })
-               dataDay = dataDay.map(function(item){return '<div class="subject flex"><div class="tiet textCenter">' + item.TietHoc.split(' - ')[1].trim() + "</div><div class='info flex'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong textCenter">' + item.Phong  + '</></div>'});
+               dataDay = dataDay.map(function(item){return '<div class="subject flex"><div class="tiet textCenter">' + periodBoard[item.TietHoc.split(' - ')[0].trim()] + "</div><div class='info flex'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong textCenter">' + item.Phong  + '</></div>'});
           }         
           document.getElementById('t' + i).className = today == i ? 'on flex' : 'off';
           document.getElementById('t'+ i).innerHTML = typeof dataDay == 'object' ? dataDay.join('') : dataDay;

@@ -4,12 +4,17 @@
 function Schedule(){
           DOM.style.opacity = 0;
           chrome.storage.local.get(['cookie'], function(res){
-               var data = 'cookie=' + res.cookie;
-               xhr.addEventListener('readystatechange', function(event){
-                         if(this.readyState == 4 && this.responseURL.indexOf('Schedules') >= 0)
-                              renderSchedule(JSON.parse(this.responseText));
-               })
-               xhrRequest('Schedules', data);
+               if(res.cookie)
+               {
+                    var data = 'cookie=' + res.cookie;
+                    xhr.addEventListener('readystatechange', function(event){
+                              if(this.readyState == 4 && this.responseURL.indexOf('Schedules') >= 0)
+                                   renderSchedule(JSON.parse(this.responseText));
+                    })
+                    xhrRequest('Schedules', data);
+               }
+               else
+                    DOM.innerHTML = 'ERROR:: Cookie null'
           })
 }
 /// + ChangePassword

@@ -55,15 +55,6 @@ body{
      margin: 0;
      padding: 0;
 }
-.itemMenu{
-     padding: 10px;
-     height: 40px;
-     text-align: center;
-     flex-grow: 1;
-     cursor: pointer;
-     background-color: #f56e2b;
-     color: #D8DBE2;
-}
 
 #menu{
      opacity: 0;
@@ -73,13 +64,23 @@ body{
      transition: opacity linear 600ms;
 }
 
+.itemMenu{
+     padding: 10px;
+     height: 40px;
+     text-align: center;
+     flex-grow: 1;
+     cursor: pointer;
+     background-color: #37C5BA;
+     color: #D8DBE2;
+}
+
 .itemMenu span{
      opacity: 0; 
      transition: opacity linear 400ms;
 }
 
 .itemMenu:hover{
-     background-color: #e65913;
+     background-color: #22AAA1;
 }
 
 .itemMenu:hover span{
