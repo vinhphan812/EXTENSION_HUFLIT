@@ -1,9 +1,14 @@
 # HUFLIT EXTENSION
 
+## Description
+     API HUFLIT SERVER HUFLIT ACTIVE ON ADDRESS "https://api-huflit.herokuapp.com/".
+     HUFLIT_EXTENSION INCLUDES KNOWLEDGES: HTML, CSS, JS, XMLHTTPREQUEST (CALL API)
+
 ## Installation
 
 ```bash
      B1: Tải và giải nén folder.
+         git clone https://github.com/vinhphan812/EXTENSION_HUFLIT.git
 ```
 ```bash
      B2: Mở chrome vào mục tiện ích mở rộng. url: "chrome://extensions/".
