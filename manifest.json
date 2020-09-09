@@ -16,7 +16,7 @@
           "storage"
      ],
      "background" : {
-          "scripts": ["/assets/modules/background.js"],
+          "scripts": ["/assets/background/background.js"],
           "persistent": false
      },
      "browser_action": {
