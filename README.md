@@ -7,7 +7,7 @@
 ## Installation
 
 ```bash
-     B1: Tải và giải nén folder.
+     B1: Tải và giải nén file ZIP.
          git clone https://github.com/vinhphan812/EXTENSION_HUFLIT.git
 ```
 ```bash
