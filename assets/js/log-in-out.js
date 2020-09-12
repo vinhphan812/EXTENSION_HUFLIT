@@ -3,7 +3,7 @@ const Menu = document.getElementById('menu'); // Menu user after Login
 const main = document.getElementById('main'); // div all element
 const inpUser = document.getElementById('user'); // input user
 const inpPass = document.getElementById('pass'); // input pass
-const host = 'https://api-huflit.herokuapp.com';
+const host = 'https://api-huflit-server.herokuapp.com/';
 
 var LoginUser, LoginPass; // variable user and pass for Login 
 var xhr = new XMLHttpRequest(); // create XHR request API
