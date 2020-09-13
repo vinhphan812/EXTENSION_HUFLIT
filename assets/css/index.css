@@ -1,0 +1,115 @@
+:root{
+     font-size: 20px;
+     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+body{
+     width: 400px;
+     height: 400px;
+     margin: auto;
+     transition: width linear 400ms, height linear 400ms;
+}
+.flex{
+     display: flex;
+     transition: all linear 400ms;
+}
+.textCenter{
+     text-align: center;
+}
+#loader{
+     align-items: center;
+     justify-content: center;
+     position: absolute;
+     top: 165px;
+     left: 165px;
+     width: 70px;
+     height: 70px;
+     background-color: #fbfbfb;
+     border-radius: 20px;
+     box-shadow: 0 0 10px 0 #333;
+}
+@keyframes spin{
+     0%{transform: rotate(0deg);}
+     100%{transform: rotate(360deg);}
+}
+
+#loader img{
+     width: 50px;
+     height: 50px;
+     animation: spin 2s linear infinite;
+}
+.logo{
+     width: 216px;
+     height: 145px;
+     transition: all linear 400ms;
+}
+.title{
+     font-size: 35px;
+     text-align: center;
+     font-weight: bold;     
+     border-bottom: 1px solid #ccc;
+     color: #373F51;
+     transition: all linear 400ms;
+}
+.login-box{
+     width: 200px;
+     margin: 0 auto;
+}
+.box{
+     position: relative;
+     margin: 15px 0;
+}
+.box input{
+     padding: 10px 0 0 0;
+     width: 100%;
+     font-size: 16px;
+     color: #000;
+     border: none;
+     border-bottom: 1px solid #000;
+     outline: none;
+     background: transparent;
+}
+.box label{
+     position: absolute;
+     top: 0;
+     left: 0;
+     padding: 10px 0;
+     color: #000;
+     pointer-events: none;
+     transition: .5s;
+}
+.box input:focus ~ label, .box input:valid ~ label, .box input:disabled ~ label{
+     top: -25px;
+     left: 0;
+     color: #e00022;
+     font-size: 12px;      
+}
+button{
+     display: block;
+     width: 100px;
+     height: 30px;
+     margin: 10px auto 0 auto;
+     background-color: #23b9b9;
+     cursor: pointer;
+     color: #fff;
+     border: 0;
+}
+.column{
+     flex-direction: column;
+     align-items: center;
+}
+.row{
+     flex-direction: column;
+     height: 75px;
+     align-items: center;
+     margin: 5px;
+}
+.row img{
+     width: 108px;
+     height: 72.5px;     
+     transform: translateX(-140px);
+}
+.row div{
+     font-size: 25px;
+     border: 0;
+     transform: translate(55px, -55px);
+}

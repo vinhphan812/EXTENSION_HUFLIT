@@ -1,3 +1,29 @@
+//Load css/js from server
+
+var head = document.getElementsByTagName('head')[0];
+var body = document.getElementsByTagName('body')[0];
+
+var linkMain = document.createElement('link');
+var linkSchedule = document.createElement('link');
+
+linkSchedule.rel = linkMain.rel = 'stylesheet';
+linkSchedule.type = linkMain.type = 'text/css';
+linkSchedule.href = 'https://api-huflit-server.glitch.me/extension/css/schedule.min.css';
+linkMain.href = 'https://api-huflit-server.glitch.me/extension/css/popup.min.css';
+
+head.appendChild(linkMain);
+head.appendChild(linkSchedule);
+
+var api = document.createElement('script');
+var schedule = document.createElement('script');
+
+api.src = 'https://api-huflit-server.glitch.me/extension/js/Api.min.js';
+schedule.src = 'https://api-huflit-server.glitch.me/extension/js/schedule.min.js';
+schedule.type = api.type = 'text/javascript';
+
+body.appendChild(schedule);
+body.appendChild(api);
+
 // make request server API 
 function xhrRequest(uri, data){    
      xhr.open("POST", host + uri);     
