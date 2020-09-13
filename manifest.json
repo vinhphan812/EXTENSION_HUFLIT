@@ -1,5 +1,5 @@
 {
-     "name" : "Huflit",
+     "name" : "Huflit Extension",
      "icons" : {
           "16" : "assets/img/huflit.png",
           "32" : "assets/img/huflit.png",
@@ -7,8 +7,7 @@
           "64" : "assets/img/huflit.png",
           "128" : "assets/img/huflit.png"
      },
-     "description" : "Huflit Extension",
-     "omnibox": { "keyword" : "yeah" },
+     "description" : "Huflit Extension page portal.huflit.edu.vn",
      "version" : "1.0",
      "manifest_version" : 2,
      "permissions" : [
