@@ -4,7 +4,6 @@ const main = document.getElementById('main'); // div all element
 const inpUser = document.getElementById('user'); // input user
 const inpPass = document.getElementById('pass'); // input pass
 const host = 'https://api-huflit-server.herokuapp.com/';
-// const host = 'https://api-huflit-server.glitch.me/';
 
 var LoginUser, LoginPass; // variable user and pass for Login 
 var xhr = new XMLHttpRequest(); // create XHR request API
