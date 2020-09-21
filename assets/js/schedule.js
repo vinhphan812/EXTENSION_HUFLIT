@@ -25,7 +25,7 @@ function renderSchedule(schedule){
 
      for(var i = 2; i <= 8; i++){
           var elThu = document.getElementById(i);
-          var dataDay = schedule.filter(function(item){return item.Thu == i});
+          var dataDay = schedule.filter(function(item){return item.Thu.split(' ')[1] == i});
           
           elThu.classList.add('thu');  
                   
@@ -34,7 +34,7 @@ function renderSchedule(schedule){
           else{
                if(dataDay.length >= 2)
                     dataDay = dataDay.sort(function(a, b){
-                         return parseInt(a.TietHoc.split(' - ')[0].trim()) - parseInt(b.TietHoc.split(' - ')[0].trim());
+                         return parseInt(a.TietHoc.split('-')[0].trim()) - parseInt(b.TietHoc.split('-')[0].trim());
                     })
                dataDay = dataDay.map(renderSubject);
           }         
@@ -86,5 +86,5 @@ function ScheduleMain(){
 }
 
 function renderSubject(item){
-     return '<div class="subject flex"><div class="tiet textCenter"><span>' + periodBoard[item.TietHoc.split(' - ')[0].trim()].start + "</span><span>" + periodBoard[item.TietHoc.split(' - ')[1].trim()].end + "</span></div><div class='info flex'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong textCenter">' + item.Phong  + '</></div>'
+     return '<div class="subject flex"><div class="tiet textCenter"><span>' + periodBoard[item.TietHoc.split('-')[0]].start + "</span><span>" + periodBoard[item.TietHoc.split('-')[1]].end + "</span></div><div class='info flex'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong textCenter">' + item.Phong  + '</></div>'
 }
