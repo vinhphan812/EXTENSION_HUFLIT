@@ -86,6 +86,7 @@ function Login(user, pass){
      {
           isDisabled(false); // not disable input and button when variable is false
           msg.innerText = "Enter user or pass";
+          displayRender();
           return;
      }
      
@@ -99,9 +100,7 @@ function Login(user, pass){
 }
 
 function inputLogin(){
-     document.getElementById('login').addEventListener('click', function(event){
-          Login();
-     });
+     document.getElementById('login').addEventListener('click', Login);
      
      document.addEventListener('keyup', function(event){
           if(event.key == 'Enter')
@@ -120,11 +119,12 @@ function Logout(){
 // make request server API 
 function xhrRequest(uri, data){    
      xhr.open("POST", host + uri);     
-
+     
      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-     xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8")
+     xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8");
      
+
      xhr.send(data);
 }
 // save cookie, user, pass to storage local
@@ -143,6 +143,8 @@ function DOMLogin(event){
                });
           }
           else{
+               inputLogin();
+               displayRender();
                isDisabled(false);
                // DOM messenger error 
                msg.innerText = res.msg;
@@ -161,7 +163,12 @@ function isDisabled(flag){
 function stopLoading(){
      main.style.filter = 'none';
      main.style.opacity = 1;
-     document.getElementById('loader').remove();
+     if(document.getElementById('loader'))
+          document.getElementById('loader').remove();
+     displayRender();
+}
+
+function displayRender(){
      DOM.style.opacity = 1;
      DOM.style.transform = 'translateY(0px)';
 }
