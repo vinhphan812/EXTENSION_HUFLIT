@@ -8,21 +8,17 @@ const host = 'https://api-huflit-server.herokuapp.com/';
 var LoginUser, LoginPass; // variable user and pass for Login 
 var xhr = new XMLHttpRequest(); // create XHR request API
 
-
-
 //start....
 // - get cookie from storage local to CheckCookie
 //  + if cookie contain in storage local --> function call API checkCookie
 //  + else display login form then add event click button and key Enter --> function Login API 
-chrome.storage.local.get(['cookie'], function(result){
-     if(result.cookie){
+chrome.storage.local.get(['cookie'], function(result) {
+     if (result.cookie) {
           main.style.opacity = 0.5;
           main.style.filter = 'blur(1px)';
           checkCookie(result.cookie);
-     }
-     else
-     {
-          inputLogin();          
+     } else {
+          inputLogin();
           return;
      }
 });
@@ -30,10 +26,9 @@ chrome.storage.local.get(['cookie'], function(result){
 // checkCookie use XmlHttpRequest
 // cookie will request to API
 // response isDone = true | false
-function checkCookie(cookie){
+function checkCookie(cookie) {
      try {
           var data = 'cookie=' + cookie;
-
           isDisabled(true);
           xhr.addEventListener('readystatechange', resCookie)
           xhrRequest('checkCookie', data);
@@ -43,28 +38,25 @@ function checkCookie(cookie){
 }
 
 
-function resCookie(event){
+function resCookie(event) {
      const msg = document.getElementById('msg');
      // 4 <=> DONE
-     if(this.readyState === 4)
-     {
+     if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
-          if(res.isDone){
+          if (res.isDone) {
                isDone(res.name);
-          }
-          else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
+          } else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
           {
-               chrome.storage.local.get(['user', 'pass'], function(res){
-                    if(res.user && res.pass)
+               chrome.storage.local.get(['user', 'pass'], function(res) {
+                    if (res.user && res.pass)
                          Login(res.user, res.pass);
-                    else
-                    {
+                    else {
                          // if user or pass is change --> display login form 
                          isDisabled(false);
                          stopLoading();
                          return;
                     }
-                    
+
                });
           }
      }
@@ -72,24 +64,24 @@ function resCookie(event){
 
 
 
-function Login(user, pass){
+function Login(user, pass) {
      const msg = document.getElementById('msg');
 
      LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
      LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
-     if(msg)
+     if (msg)
           msg.innerText = "";
 
      isDisabled(true); // disabled input and button when variable is true
 
-     if(LoginUser == "" || LoginPass == "") // if LoginUser or PassUser are equal to "", formLogin is display
+     if (LoginUser == "" || LoginPass == "") // if LoginUser or PassUser are equal to "", formLogin is display
      {
           isDisabled(false); // not disable input and button when variable is false
           msg.innerText = "Enter user or pass";
           displayRender();
           return;
      }
-     
+
      var data = "user=" + LoginUser + "&pass=" + LoginPass; // set data request formData --> x-www-form-urlencoded
 
      xhr.removeEventListener('readystatechange', resCookie);
@@ -99,50 +91,48 @@ function Login(user, pass){
      xhrRequest('profile', data)
 }
 
-function inputLogin(){
+function inputLogin() {
      document.getElementById('login').addEventListener('click', Login);
-     
-     document.addEventListener('keyup', function(event){
-          if(event.key == 'Enter')
+
+     document.addEventListener('keyup', function(event) {
+          if (event.key == 'Enter')
                Login();
      });
      stopLoading();
 }
 
 // remove username, password, cookie in storage local
-function Logout(){
-     chrome.storage.local.remove(['user', 'pass', 'cookie'], function(){
+function Logout() {
+     chrome.storage.local.remove(['user', 'pass', 'cookie'], function() {
           console.log('success');
      })
      window.location.href = 'popup.html'
 }
 // make request server API 
-function xhrRequest(uri, data){    
-     xhr.open("POST", host + uri);     
-     
+function xhrRequest(uri, data) {
+     xhr.open("POST", host + uri);
+
      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
      xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8");
-     
+
 
      xhr.send(data);
 }
 // save cookie, user, pass to storage local
-function DOMLogin(event){
+function DOMLogin(event) {
      const msg = document.getElementById('msg');
-     if(this.readyState === 4)
-     {
+     if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
 
-          if(res.isDone){ 
+          if (res.isDone) {
                // DOM user and menu
                // save data user, pass, cookie 
-               chrome.storage.local.set({cookie: res.cookie, user: LoginUser, pass: LoginPass}, function(){
+               chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass }, function() {
                     console.log('save success');
                     isDone(res.name);
                });
-          }
-          else{
+          } else {
                inputLogin();
                displayRender();
                isDisabled(false);
@@ -153,22 +143,22 @@ function DOMLogin(event){
 }
 
 // use to Input, Button Login
-function isDisabled(flag){
+function isDisabled(flag) {
      inpUser.disabled = flag;
      inpPass.disabled = flag;
-     document.getElementById('login').disabled = flag;          
+     document.getElementById('login').disabled = flag;
 }
 
 // stop action loading 
-function stopLoading(){
+function stopLoading() {
      main.style.filter = 'none';
      main.style.opacity = 1;
-     if(document.getElementById('loader'))
+     if (document.getElementById('loader'))
           document.getElementById('loader').remove();
      displayRender();
 }
 
-function displayRender(){
+function displayRender() {
      DOM.style.opacity = 1;
      DOM.style.transform = 'translateY(0px)';
 }
