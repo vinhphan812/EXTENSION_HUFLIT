@@ -37,7 +37,7 @@ function checkCookie(cookie) {
      }
 }
 
-
+//event readstatechange
 function resCookie(event) {
      const msg = document.getElementById('msg');
      // 4 <=> DONE
@@ -45,8 +45,8 @@ function resCookie(event) {
           var res = JSON.parse(this.responseText);
           if (res.isDone) {
                isDone(res.name);
-          } else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
-          {
+          } else {
+               // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
                chrome.storage.local.get(['user', 'pass'], function(res) {
                     if (res.user && res.pass)
                          Login(res.user, res.pass);
@@ -56,14 +56,12 @@ function resCookie(event) {
                          stopLoading();
                          return;
                     }
-
                });
           }
      }
 }
 
-
-
+//Login param is username, password 
 function Login(user, pass) {
      const msg = document.getElementById('msg');
 
@@ -90,23 +88,20 @@ function Login(user, pass) {
 
      xhrRequest('profile', data)
 }
-
+//display input username and password
 function inputLogin() {
      document.getElementById('login').addEventListener('click', Login);
 
      document.addEventListener('keyup', function(event) {
-          if (event.key == 'Enter')
-               Login();
+          if (event.key == 'Enter') Login();
      });
      stopLoading();
 }
 
 // remove username, password, cookie in storage local
 function Logout() {
-     chrome.storage.local.remove(['user', 'pass', 'cookie'], function() {
-          console.log('success');
-     })
-     window.location.href = 'popup.html'
+     chrome.storage.local.remove(['user', 'pass', 'cookie'], () => {});
+     window.location.href = 'popup.html';
 }
 // make request server API 
 function xhrRequest(uri, data) {
@@ -116,7 +111,6 @@ function xhrRequest(uri, data) {
      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
      xhr.setRequestHeader("Accept-Language", "vi,en;q=0.9,vi-VN;q=0.8");
 
-
      xhr.send(data);
 }
 // save cookie, user, pass to storage local
@@ -124,37 +118,33 @@ function DOMLogin(event) {
      const msg = document.getElementById('msg');
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
-
-          if (res.isDone) {
-               // DOM user and menu
-               // save data user, pass, cookie 
+          if (res.isDone)
                chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass }, function() {
-                    console.log('save success');
+                    // Login success, then save data user, pass, cookie
                     isDone(res.name);
                });
-          } else {
+          else {
+               //Login false: login again and messeger error
                inputLogin();
                displayRender();
                isDisabled(false);
-               // DOM messenger error 
                msg.innerText = res.msg;
           }
      }
 }
 
-// use to Input, Button Login
+// enble/disable to Input, Button Login
 function isDisabled(flag) {
      inpUser.disabled = flag;
      inpPass.disabled = flag;
      document.getElementById('login').disabled = flag;
 }
 
-// stop action loading 
+// stop action spin login 
 function stopLoading() {
      main.style.filter = 'none';
      main.style.opacity = 1;
-     if (document.getElementById('loader'))
-          document.getElementById('loader').remove();
+     if (document.getElementById('loader')) document.getElementById('loader').remove();
      displayRender();
 }
 

@@ -1,26 +1,20 @@
-var dataMenu = [
-     ['Schedules', 'Schedules'],
-     ['Password', 'Password'],
-     ['Logout', 'Logout']
-];
+var dataMenu = ['Schedules', 'Password', 'Logout'];
 
 // if done --> DOM data 
 function isDone(data) {
      document.getElementById('box-title').className = 'flex row';
 
      var liMenu = dataMenu.map(function(item) {
-          return '<li class="itemMenu" id="' + item[0] + '"><img class="icon" src="assets/img/' + item[0] + '.png"><span>' + item[1] + '</span></li>';
+          return '<li class="itemMenu" id="' + item + '"><img class="icon" src="assets/img/' + item + '.png"><span>' + item + '</span></li>';
      })
 
-     if (document.getElementById('loader'))
-          stopLoading();
+     if (document.getElementById('loader')) stopLoading();
 
      document.body.style.height = '500px';
 
      //remove event xhr Login and check cookie 
      document.removeEventListener('keyup', function(event) {
-          if (event.key == 'Enter')
-               Login();
+          if (event.key == 'Enter') Login();
      });
 
      xhr.removeEventListener('readystatechange', resCookie);

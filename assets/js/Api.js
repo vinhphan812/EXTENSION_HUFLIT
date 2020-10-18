@@ -18,9 +18,8 @@ function Schedule() {
                     DOM.style.opacity = 1;
                     DOM.innerHTML = '<div class="errorText">ERROR:: Cookie null</div>';
                }
-          })
-     else
-          renderSchedule(schedules);
+          });
+     else renderSchedule(schedules);
 }
 /// + ChangePassword
 //// DOM form enter new password --> transition css, add event checkbox check text <-> pass 
@@ -39,15 +38,12 @@ function ChangePassword() {
           var check = document.getElementById('check');
 
           document.addEventListener('keyup', function(event) {
-               if (event.key == 'Enter')
-                    Change();
+               if (event.key == 'Enter') Change();
           })
 
           check.addEventListener('click', function(event) {
-               if (check.checked)
-                    pw1.type = 'text';
-               else
-                    pw1.type = 'password';
+               if (check.checked) pw1.type = 'text';
+               else pw1.type = 'password';
           })
           update.addEventListener('click', Change);
      }, 1000);
@@ -63,9 +59,7 @@ function Change() {
                chrome.storage.local.set({ pass: pw1.value });
                var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
                xhr.addEventListener('readystatechange', function(event) {
-                    if (this.readyState === 4 && this.responseURL.indexOf('ChangePass') >= 0) {
-                         DOM.innerHTML = '<div class="successText"><img src="' + host + 'extension/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
-                    }
+                    DOM.innerHTML = '<div class="successText"><img src="' + host + 'extension/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
                });
                xhrRequest('ChangePass', data);
           }

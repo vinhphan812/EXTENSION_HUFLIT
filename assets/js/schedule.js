@@ -19,9 +19,10 @@ const periodBoard = {
 function renderSchedule(schedule) {
      const date = new Date();
      var today = date.getDay() + 1 == 1 ? 8 : date.getDay() + 1;
+
      ///check main contain in #DOM
-     if (!DOM.childElementCount || DOM.children[0].className != 'day')
-          ScheduleMain(); // render main schedule as: list day of week and render data
+     // render main schedule as: list day of week and render data
+     if (!DOM.childElementCount || DOM.children[0].className != 'day') ScheduleMain();
 
      for (var i = 2; i <= 8; i++) {
           var elThu = document.getElementById(i);
@@ -31,11 +32,10 @@ function renderSchedule(schedule) {
 
           if (dataDay.length == 0)
                dataDay = today == i ? "<p class='textCenter'> Hôm nay rãnh rỗi quá nè...!</p>" : "<p class='textcenter'>Trống...!</p>";
-          else {
-               if (dataDay.length >= 2)
-                    dataDay = dataDay.sort(function(a, b) {
-                         return parseInt(a.TietHoc.split('-')[0].trim()) - parseInt(b.TietHoc.split('-')[0].trim());
-                    })
+          else if (dataDay.length >= 2) {
+               dataDay = dataDay.sort(function(a, b) {
+                    return parseInt(a.TietHoc.split('-')[0].trim()) - parseInt(b.TietHoc.split('-')[0].trim());
+               })
                dataDay = dataDay.map(renderSubject);
           }
           document.getElementById('t' + i).className = today == i ? 'on flex' : 'off';
@@ -45,12 +45,13 @@ function renderSchedule(schedule) {
                     document.getElementById('t' + i).className = 'off';
                     document.getElementById(i).className = 'thu';
                }
-               this.className += ' active'
+               this.className += ' active';
                document.getElementById('t' + this.id).className = 'on flex';
           })
      }
      document.getElementById(today).textContent = "Hôm nay";
      document.getElementById(today).className += ' active';
+
      DOM.style.opacity = 1;
      DOM.style.transform = 'translateY("30px")';
 }
