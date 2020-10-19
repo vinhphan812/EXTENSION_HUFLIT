@@ -32,22 +32,25 @@ function renderSchedule(schedule) {
 
           if (dataDay.length == 0)
                dataDay = today == i ? "<p class='textCenter'> Hôm nay rãnh rỗi quá nè...!</p>" : "<p class='textcenter'>Trống...!</p>";
-          else if (dataDay.length >= 2) {
-               dataDay = dataDay.sort(function(a, b) {
-                    return parseInt(a.TietHoc.split('-')[0].trim()) - parseInt(b.TietHoc.split('-')[0].trim());
-               })
+          else {
+               if (dataDay.length >= 2)
+                    dataDay = dataDay.sort((a, b) =>
+                         parseInt(a.TietHoc.split('-')[0].trim()) - parseInt(b.TietHoc.split('-')[0].trim()));
                dataDay = dataDay.map(renderSubject);
           }
           document.getElementById('t' + i).className = today == i ? 'on flex' : 'off';
           document.getElementById('t' + i).innerHTML = typeof dataDay == 'object' ? dataDay.join('') : dataDay;
           elThu.addEventListener('click', function(ev) {
                for (var i = 2; i <= 8; i++) {
-                    document.getElementById('t' + i).className = 'off';
-                    document.getElementById(i).className = 'thu';
+                    if (this.id == i) {
+                         this.className += ' active';
+                         document.getElementById('t' + this.id).className = 'on flex';
+                    } else {
+                         document.getElementById('t' + i).className = 'off';
+                         document.getElementById(i).className = 'thu';
+                    }
                }
-               this.className += ' active';
-               document.getElementById('t' + this.id).className = 'on flex';
-          })
+          });
      }
      document.getElementById(today).textContent = "Hôm nay";
      document.getElementById(today).className += ' active';

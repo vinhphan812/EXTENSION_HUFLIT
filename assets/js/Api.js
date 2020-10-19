@@ -34,17 +34,17 @@ function ChangePassword() {
           DOM.style.transform = 'translateY(0px)';
 
           var update = document.getElementById('update');
-          var pw1 = document.getElementById('pw1');
           var check = document.getElementById('check');
+          var pw1 = document.getElementById('pw1');
 
           document.addEventListener('keyup', function(event) {
                if (event.key == 'Enter') Change();
-          })
+          });
 
           check.addEventListener('click', function(event) {
                if (check.checked) pw1.type = 'text';
                else pw1.type = 'password';
-          })
+          });
           update.addEventListener('click', Change);
      }, 1000);
 }
@@ -63,5 +63,5 @@ function Change() {
                });
                xhrRequest('ChangePass', data);
           }
-     })
+     });
 }

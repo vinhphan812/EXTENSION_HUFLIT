@@ -17,10 +17,8 @@ chrome.storage.local.get(['cookie'], function(result) {
           main.style.opacity = 0.5;
           main.style.filter = 'blur(1px)';
           checkCookie(result.cookie);
-     } else {
+     } else
           inputLogin();
-          return;
-     }
 });
 
 // checkCookie use XmlHttpRequest
@@ -43,21 +41,18 @@ function resCookie(event) {
      // 4 <=> DONE
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
-          if (res.isDone) {
+          if (res.isDone)
                isDone(res.name);
-          } else {
-               // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
+          else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
                chrome.storage.local.get(['user', 'pass'], function(res) {
-                    if (res.user && res.pass)
-                         Login(res.user, res.pass);
-                    else {
-                         // if user or pass is change --> display login form 
-                         isDisabled(false);
-                         stopLoading();
-                         return;
-                    }
-               });
-          }
+               if (res.user && res.pass)
+                    Login(res.user, res.pass);
+               else {
+                    // if user or pass is change --> display login form 
+                    isDisabled(false);
+                    stopLoading();
+               }
+          });
      }
 }
 
@@ -118,11 +113,8 @@ function DOMLogin(event) {
      const msg = document.getElementById('msg');
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
-          if (res.isDone)
-               chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass }, function() {
-                    // Login success, then save data user, pass, cookie
-                    isDone(res.name);
-               });
+          if (res.isDone) // Login success, then save data user, pass, cookie
+               chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass }, () => isDone(res.name));
           else {
                //Login false: login again and messeger error
                inputLogin();

@@ -5,7 +5,10 @@ function isDone(data) {
      document.getElementById('box-title').className = 'flex row';
 
      var liMenu = dataMenu.map(function(item) {
-          return '<li class="itemMenu" id="' + item + '"><img class="icon" src="assets/img/' + item + '.png"><span>' + item + '</span></li>';
+          return '<li class="itemMenu" id="' +
+               item + '"><img class="icon" src="assets/img/' +
+               item + '.png"><span>' +
+               item + '</span></li>';
      })
 
      if (document.getElementById('loader')) stopLoading();
@@ -21,7 +24,10 @@ function isDone(data) {
      xhr.removeEventListener('readystatechange', DOMLogin);
 
      //DOM username
-     Menu.innerHTML = '<div class="user flex"><img src="assets/img/user.png"><p>' + data.split(' |')[1] + '</p></div><ul class="menu flex">' + liMenu.join('') + '</ul>';
+     Menu.innerHTML = '<div class="user flex"><img src="assets/img/user.png"><p>' +
+          data.split(' |')[1] +
+          '</p></div><ul class="menu flex">' +
+          liMenu.join('') + '</ul>';
      //DOM menu list
      document.getElementById('Schedules').addEventListener('click', Schedule);
      document.getElementById('Password').addEventListener('click', ChangePassword);
