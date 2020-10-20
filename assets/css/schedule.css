@@ -35,8 +35,8 @@
      color: #fff;
 }
 
-.render .off,
-.on {
+.render>.off,
+.render>.on {
      position: absolute;
      height: 100%;
      width: 100%;
@@ -46,8 +46,8 @@
      padding-top: 10px;
 }
 
-.off p,
-.on p {
+.off>p,
+.on>p {
      align-self: center;
      margin: auto;
      font-size: 30px;
@@ -96,11 +96,11 @@
      margin: 0 10px;
 }
 
-.info .mon {
+.info>.mon {
      font-size: 18px;
      font-weight: 400;
 }
 
-.info .giaovien {
+.info>.giaovien {
      color: #efefef;
 }

@@ -24,7 +24,7 @@
      color: #D8DBE2;
 }
 
-.itemMenu span {
+.itemMenu>span {
      opacity: 0;
      transition: opacity linear 400ms;
 }
@@ -55,11 +55,11 @@
      margin: 5px;
 }
 
-.user p {
+.user>p {
      margin: 0;
 }
 
-.user img {
+.user>img {
      margin: 1px;
      width: 16px;
      height: 16px;
@@ -69,11 +69,6 @@
      align-items: center;
      justify-content: center;
      margin: 10px;
-}
-
-layer {
-     font-size: 12px;
-     margin: 0;
 }
 
 #DOM {
