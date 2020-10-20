@@ -9,7 +9,7 @@ function isDone(data) {
                item + '"><img class="icon" src="assets/img/' +
                item + '.png"><span>' +
                item + '</span></li>';
-     })
+     });
 
      if (document.getElementById('loader')) stopLoading();
 

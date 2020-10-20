@@ -12,7 +12,7 @@ function Schedule() {
                     xhr.addEventListener('readystatechange', function(event) {
                          if (this.readyState == 4 && this.responseURL.indexOf('Schedules') >= 0)
                               renderSchedule(schedules = JSON.parse(this.responseText));
-                    })
+                    });
                     xhrRequest('Schedules', data);
                } else {
                     DOM.style.opacity = 1;

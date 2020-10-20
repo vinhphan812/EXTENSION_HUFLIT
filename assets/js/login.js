@@ -36,7 +36,7 @@ function checkCookie(cookie) {
 }
 
 //event readstatechange
-function resCookie(event) {
+function resCookie() {
      const msg = document.getElementById('msg');
      // 4 <=> DONE
      if (this.readyState === 4) {
