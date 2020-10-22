@@ -26,7 +26,7 @@ function renderSchedule(schedule) {
 
      for (var i = 2; i <= 8; i++) {
           var elThu = document.getElementById(i);
-          var dataDay = schedule.filter((item) => item.Thu.split(' ')[1] === i);
+          var dataDay = schedule.filter((item) => item.Thu.split(' ')[1] == i);
 
           elThu.classList.add('thu');
 
