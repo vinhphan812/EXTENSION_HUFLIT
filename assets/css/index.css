@@ -19,6 +19,17 @@ body {
      transition: width linear 400ms, height linear 400ms;
 }
 
+button {
+     display: block;
+     width: 100px;
+     height: 30px;
+     margin: 10px auto 0 auto;
+     background-color: #23b9b9;
+     cursor: pointer;
+     color: #fff;
+     border: 0;
+}
+
 .flex {
      display: flex;
      transition: all linear 400ms;
@@ -100,17 +111,6 @@ body {
      left: 0;
      color: #e00022;
      font-size: 12px;
-}
-
-button {
-     display: block;
-     width: 100px;
-     height: 30px;
-     margin: 10px auto 0 auto;
-     background-color: #23b9b9;
-     cursor: pointer;
-     color: #fff;
-     border: 0;
 }
 
 .column {

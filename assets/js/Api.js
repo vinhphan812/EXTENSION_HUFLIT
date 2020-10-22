@@ -59,7 +59,7 @@ function Change() {
                chrome.storage.local.set({ pass: pw1.value });
                var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
                xhr.addEventListener('readystatechange', function(event) {
-                    DOM.innerHTML = '<div class="successText"><img src="' + host + 'extension/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
+                    DOM.innerHTML = '<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
                });
                xhrRequest('ChangePass', data);
           }

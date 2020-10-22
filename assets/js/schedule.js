@@ -18,7 +18,7 @@ const periodBoard = {
 
 function renderSchedule(schedule) {
      const date = new Date();
-     var today = date.getDay() + 1 == 1 ? 8 : date.getDay() + 1;
+     const today = date.getDay() + 1 == 1 ? 8 : date.getDay() + 1;
 
      ///check main contain in #DOM
      // render main schedule as: list day of week and render data
@@ -26,7 +26,7 @@ function renderSchedule(schedule) {
 
      for (var i = 2; i <= 8; i++) {
           var elThu = document.getElementById(i);
-          var dataDay = schedule.filter(function(item) { return item.Thu.split(' ')[1] == i });
+          var dataDay = schedule.filter((item) => item.Thu.split(' ')[1] === i);
 
           elThu.classList.add('thu');
 
@@ -89,5 +89,11 @@ function ScheduleMain() {
 }
 
 function renderSubject(item) {
-     return '<div class="subject flex"><div class="tiet textCenter"><span>' + periodBoard[item.TietHoc.split('-')[0]].start + "</span><span>" + periodBoard[item.TietHoc.split('-')[1]].end + "</span></div><div class='info flex'><span class='mon'>" + item.MonHoc + '</span><span class="giaovien">' + item.GiaoVien + '</span></div><span class="phong textCenter">' + item.Phong + '</></div>'
+     return '<div class="subject flex"><div class="tiet textCenter"><span>' +
+          periodBoard[item.TietHoc.split('-')[0]].start +
+          "</span><span>" + periodBoard[item.TietHoc.split('-')[1]].end +
+          "</span></div><div class='info flex'><span class='mon'>" +
+          item.MonHoc + '</span><span class="giaovien">' +
+          item.GiaoVien + '</span></div><span class="phong textCenter">' +
+          item.Phong + '</></div>';
 }

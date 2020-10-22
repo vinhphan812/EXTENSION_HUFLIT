@@ -62,8 +62,8 @@ function Login(user, pass) {
 
      LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
      LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
-     if (msg)
-          msg.innerText = "";
+
+     if (msg) msg.innerText = "";
 
      isDisabled(true); // disabled input and button when variable is true
 
@@ -71,8 +71,7 @@ function Login(user, pass) {
      {
           isDisabled(false); // not disable input and button when variable is false
           msg.innerText = "Enter user or pass";
-          displayRender();
-          return;
+          return displayRender();
      }
 
      var data = "user=" + LoginUser + "&pass=" + LoginPass; // set data request formData --> x-www-form-urlencoded
@@ -81,21 +80,20 @@ function Login(user, pass) {
 
      xhr.addEventListener('readystatechange', DOMLogin);
 
-     xhrRequest('profile', data)
+     xhrRequest('profile', data);
 }
 //display input username and password
 function inputLogin() {
      document.getElementById('login').addEventListener('click', Login);
 
-     document.addEventListener('keyup', function(event) {
-          if (event.key == 'Enter') Login();
-     });
+     document.addEventListener('keyup', (event) => event.key == 'Enter' ? Login() : '');
+
      stopLoading();
 }
 
 // remove username, password, cookie in storage local
-function Logout() {
-     chrome.storage.local.remove(['user', 'pass', 'cookie'], () => {});
+function logOut() {
+     chrome.storage.local.remove(['user', 'pass', 'cookie']);
      window.location.href = 'popup.html';
 }
 // make request server API 

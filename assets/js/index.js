@@ -31,7 +31,7 @@ function isDone(data) {
      //DOM menu list
      document.getElementById('Schedules').addEventListener('click', Schedule);
      document.getElementById('Password').addEventListener('click', ChangePassword);
-     document.getElementById('Logout').addEventListener('click', Logout);
+     document.getElementById('Logout').addEventListener('click', logOut);
      DOM.innerHTML = '';
 
      //transition css
