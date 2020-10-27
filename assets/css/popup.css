@@ -60,7 +60,7 @@
 }
 
 .user>img {
-     margin: 1px;
+     margin-right: 5px;
      width: 16px;
      height: 16px;
 }
@@ -85,10 +85,12 @@
 }
 
 .errorText {
+     display: flex;
+     justify-content: center;
+     align-items: center;
      color: #e00022;
      font-weight: 700;
-     text-align: center;
-     line-height: 330px;
+     height: 100%;
 }
 
 .successText {

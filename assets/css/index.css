@@ -1,6 +1,7 @@
 :root {
      font-size: 20px;
      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+     user-select: none;
 }
 
 @keyframes spin {
@@ -28,6 +29,7 @@ button {
      cursor: pointer;
      color: #fff;
      border: 0;
+     box-shadow: 0 0 5px 0 #23B9BA80;
 }
 
 .flex {
@@ -84,7 +86,7 @@ button {
 }
 
 .box input {
-     padding: 10px 0 0 0;
+     padding: 10px 0 5px 0;
      width: 100%;
      font-size: 16px;
      color: #000;
@@ -92,6 +94,7 @@ button {
      border-bottom: 1px solid #000;
      outline: none;
      background: transparent;
+     transition: border linear 400ms;
 }
 
 .box label {
@@ -107,10 +110,16 @@ button {
 .box input:focus~label,
 .box input:valid~label,
 .box input:disabled~label {
-     top: -25px;
+     top: -20px;
      left: 0;
-     color: #e00022;
+     color: #4bb5a6;
      font-size: 12px;
+}
+
+.box input:focus,
+.box input:valid,
+.box input:disabled {
+     border-bottom: 1px solid #369084;
 }
 
 .column {
