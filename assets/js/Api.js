@@ -44,7 +44,7 @@ function ChangePassword() {
           });
           update.addEventListener('click', Change);
           displayRender();
-     }, 700);
+     }, 500);
 }
 
 //get cookie and password old --> check new pass != old pass --> request API changePass
@@ -57,7 +57,8 @@ function Change() {
                chrome.storage.local.set({ pass: pw1.value });
                var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
                xhr.addEventListener('readystatechange', function(event) {
-                    DOM.innerHTML = '<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
+                    if (this.readyState == 4)
+                         DOM.innerHTML = '<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
                });
                xhrRequest('ChangePass', data);
           }

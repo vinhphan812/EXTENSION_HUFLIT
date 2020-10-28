@@ -84,8 +84,6 @@ function Login(user, pass) {
 
      var data = "user=" + LoginUser + "&pass=" + LoginPass; // set data request formData --> x-www-form-urlencoded
 
-     xhr.removeEventListener('readystatechange', resCookie);
-
      xhr.addEventListener('readystatechange', DOMLogin);
 
      xhrRequest('profile', data);
@@ -93,10 +91,12 @@ function Login(user, pass) {
 //display input username and password
 function inputLogin() {
      displayRender();
+     xhr.removeEventListener('readystatechange', resCookie);
      document.getElementById('login').addEventListener('click', Login);
-     document.addEventListener('keyup', (event) => event.key == 'Enter' ? Login() : '');
+     document.addEventListener('keyup', (event) => {
+          if (event.key == 'Enter') Login();
+     })
 }
-
 // remove username, password, cookie in storage local
 function logOut() {
      chrome.storage.local.remove(['user', 'pass', 'cookie', 'schedules', 'name']);
@@ -119,12 +119,12 @@ function DOMLogin(event) {
           var res = JSON.parse(this.responseText);
           if (res.isDone) // Login success, then save data user, pass, cookie
                chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass, name: res.name }, () => {
+               DOM.innerHTML = '';
                Schedule();
                isDone(res.name);
           });
           else {
                //Login false: login again and messeger error
-               inputLogin();
                displayRender();
                isDisabled(false);
                msg.innerText = res.msg;
