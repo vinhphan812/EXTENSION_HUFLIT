@@ -7,8 +7,8 @@
 ## Installation
 
 ```bash
-     B1: Tải và giải nén file ZIP.
-         git clone https://github.com/vinhphan812/EXTENSION_HUFLIT.git
+     B1: Tải và giải nén file ZIP hoặc sử dụng lệnh (git):
+          git clone https://github.com/vinhphan812/EXTENSION_HUFLIT.git
 ```
 ```bash
      B2: Mở chrome vào mục tiện ích mở rộng. url: "chrome://extensions/".
