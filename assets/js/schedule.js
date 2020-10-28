@@ -55,8 +55,7 @@ function renderSchedule(schedule) {
      document.getElementById(today).textContent = "Hôm nay";
      document.getElementById(today).className += ' active';
 
-     DOM.style.opacity = 1;
-     DOM.style.transform = 'translateY("30px")';
+     displayRender();
 }
 
 function ScheduleMain() {

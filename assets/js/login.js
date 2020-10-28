@@ -12,14 +12,23 @@ var xhr = new XMLHttpRequest(); // create XHR request API
 // - get cookie from storage local to CheckCookie
 //  + if cookie contain in storage local --> function call API checkCookie
 //  + else display login form then add event click button and key Enter --> function Login API 
-chrome.storage.local.get(['cookie'], function(result) {
-     if (result.cookie) {
-          main.style.opacity = 0.5;
-          main.style.filter = 'blur(1px)';
-          checkCookie(result.cookie);
-     } else
-          inputLogin();
-});
+
+chrome.storage.local.get(['schedules', 'name'], function(res) {
+     if (res.schedules && res.name) {
+          isDone(res.name)
+          renderSchedule(res.schedules);
+     }
+     getCookie();
+})
+
+function getCookie() {
+     chrome.storage.local.get(['cookie'], function(result) {
+          if (result.cookie)
+               checkCookie(result.cookie);
+          else
+               inputLogin();
+     });
+}
 
 // checkCookie use XmlHttpRequest
 // cookie will request to API
@@ -27,11 +36,10 @@ chrome.storage.local.get(['cookie'], function(result) {
 function checkCookie(cookie) {
      try {
           var data = 'cookie=' + cookie;
-          isDisabled(true);
           xhr.addEventListener('readystatechange', resCookie)
           xhrRequest('checkCookie', data);
      } catch (error) {
-          inputLogin();
+          console.log(error);
      }
 }
 
@@ -47,11 +55,8 @@ function resCookie() {
                chrome.storage.local.get(['user', 'pass'], function(res) {
                if (res.user && res.pass)
                     Login(res.user, res.pass);
-               else {
-                    // if user or pass is change --> display login form 
+               else // if user or pass is change --> display login form 
                     isDisabled(false);
-                    stopLoading();
-               }
           });
      }
 }
@@ -63,9 +68,12 @@ function Login(user, pass) {
      LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
      LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
 
-     if (msg) msg.innerText = "";
+     if (msg) {
+          isDisabled(true); // disabled input and button when variable is true
+          msg.innerText = "";
+     }
 
-     isDisabled(true); // disabled input and button when variable is true
+
 
      if (LoginUser == "" || LoginPass == "") // if LoginUser or PassUser are equal to "", formLogin is display
      {
@@ -84,16 +92,14 @@ function Login(user, pass) {
 }
 //display input username and password
 function inputLogin() {
+     displayRender();
      document.getElementById('login').addEventListener('click', Login);
-
      document.addEventListener('keyup', (event) => event.key == 'Enter' ? Login() : '');
-
-     stopLoading();
 }
 
 // remove username, password, cookie in storage local
 function logOut() {
-     chrome.storage.local.remove(['user', 'pass', 'cookie']);
+     chrome.storage.local.remove(['user', 'pass', 'cookie', 'schedules', 'name']);
      window.location.href = 'popup.html';
 }
 // make request server API 
@@ -112,7 +118,10 @@ function DOMLogin(event) {
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
           if (res.isDone) // Login success, then save data user, pass, cookie
-               chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass }, () => isDone(res.name));
+               chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass, name: res.name }, () => {
+               Schedule();
+               isDone(res.name);
+          });
           else {
                //Login false: login again and messeger error
                inputLogin();
@@ -128,14 +137,6 @@ function isDisabled(flag) {
      inpUser.disabled = flag;
      inpPass.disabled = flag;
      document.getElementById('login').disabled = flag;
-}
-
-// stop action spin login 
-function stopLoading() {
-     main.style.filter = 'none';
-     main.style.opacity = 1;
-     if (document.getElementById('loader')) document.getElementById('loader').remove();
-     displayRender();
 }
 
 function displayRender() {

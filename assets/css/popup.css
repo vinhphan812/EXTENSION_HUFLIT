@@ -12,6 +12,7 @@
      width: 100%;
      bottom: 0;
      transition: opacity linear 600ms;
+     z-index: 2;
 }
 
 .itemMenu {
@@ -21,7 +22,7 @@
      flex-grow: 1;
      cursor: pointer;
      background-color: #37C5BA;
-     color: #D8DBE2;
+     color: #d8dbe9bf;
 }
 
 .itemMenu>span {
@@ -53,6 +54,7 @@
 .user {
      justify-content: center;
      margin: 5px;
+     background-color: #fff;
 }
 
 .user>p {
@@ -72,16 +74,21 @@
 }
 
 #DOM {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
      transform: translateY(30px);
      opacity: 0;
      transition: transform linear 450ms, opacity linear 600ms;
 }
 
 #msg {
+     margin: 0;
      height: 20px;
      font-size: 12px;
      color: #a70606;
      text-align: center;
+     transition: all 400ms;
 }
 
 .errorText {
