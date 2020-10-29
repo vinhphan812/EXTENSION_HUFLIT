@@ -47,7 +47,7 @@ function checkCookie(cookie) {
 function resCookie() {
      const msg = document.getElementById('msg');
      // 4 <=> DONE
-     if (this.readyState === 4) {
+     if (this.readyState == 4) {
           var res = JSON.parse(this.responseText);
           if (res.isDone)
                isDone(res.name);
@@ -64,7 +64,8 @@ function resCookie() {
 //Login param is username, password 
 function Login(user, pass) {
      const msg = document.getElementById('msg');
-
+     if (user && pass)
+          xhr.removeEventListener('readystatechange', resCookie);
      LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
      LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
 
@@ -117,6 +118,7 @@ function DOMLogin(event) {
      const msg = document.getElementById('msg');
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
+          console.log(res.cookie);
           if (res.isDone) // Login success, then save data user, pass, cookie
                chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass, name: res.name }, () => {
                DOM.innerHTML = '';
