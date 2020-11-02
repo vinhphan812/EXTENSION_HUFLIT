@@ -2,7 +2,6 @@ var dataMenu = ['Schedules', 'Password', 'Logout'];
 
 // if done --> DOM data 
 function isDone(data) {
-
      document.getElementById('box-title').className = 'flex row';
      var liMenu = dataMenu.map(function(item) {
           return '<li class="itemMenu" id="' +

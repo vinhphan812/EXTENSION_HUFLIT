@@ -50,17 +50,20 @@ function ChangePassword() {
 //get cookie and password old --> check new pass != old pass --> request API changePass
 function Change() {
      msg.innerText = '';
-     chrome.storage.local.get(['cookie', 'pass'], function(res) {
-          if (pw1.value == '' || pw1.value == res.pass)
-               msg.innerText = 'bạn chưa nhập mật khẩu mới...';
-          else {
-               chrome.storage.local.set({ pass: pw1.value });
-               var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
-               xhr.addEventListener('readystatechange', function(event) {
-                    if (this.readyState == 4)
-                         DOM.innerHTML = '<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
-               });
-               xhrRequest('ChangePass', data);
-          }
-     });
+     if (cookieAcept)
+          chrome.storage.local.get(['cookie', 'pass'], function(res) {
+               if (pw1.value == '' || pw1.value == res.pass)
+                    msg.innerText = 'bạn chưa nhập mật khẩu mới...';
+               else {
+                    chrome.storage.local.set({ pass: pw1.value });
+                    var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
+                    xhr.addEventListener('readystatechange', function(event) {
+                         if (this.readyState == 4)
+                              DOM.innerHTML = '<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
+                    });
+                    xhrRequest('ChangePass', data);
+               }
+          });
+     else
+          msg.textContent = "await Loading";
 }

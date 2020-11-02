@@ -5,6 +5,8 @@ const inpUser = document.getElementById('user'); // input user
 const inpPass = document.getElementById('pass'); // input pass
 const host = 'https://api-huflit-server.herokuapp.com/';
 
+
+var cookieAcept = false;
 var LoginUser, LoginPass; // variable user and pass for Login 
 var xhr = new XMLHttpRequest(); // create XHR request API
 
@@ -49,9 +51,10 @@ function resCookie() {
      // 4 <=> DONE
      if (this.readyState == 4) {
           var res = JSON.parse(this.responseText);
-          if (res.isDone)
+          if (res.isDone) {
+               cookieAcept = true;
                isDone(res.name);
-          else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
+          } else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
                chrome.storage.local.get(['user', 'pass'], function(res) {
                if (res.user && res.pass)
                     Login(res.user, res.pass);
@@ -121,6 +124,7 @@ function DOMLogin(event) {
           if (res.isDone) // Login success, then save data user, pass, cookie
                chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass, name: res.name }, () => {
                DOM.innerHTML = '';
+               cookieAcept = true;
                Schedule();
                isDone(res.name);
           });
