@@ -118,7 +118,6 @@ function DOMLogin(event) {
      const msg = document.getElementById('msg');
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
-          console.log(res.cookie);
           if (res.isDone) // Login success, then save data user, pass, cookie
                chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass, name: res.name }, () => {
                DOM.innerHTML = '';
