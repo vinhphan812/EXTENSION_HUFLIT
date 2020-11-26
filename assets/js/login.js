@@ -96,7 +96,7 @@ function Login(user, pass) {
 function inputLogin() {
      displayRender();
      xhr.removeEventListener('readystatechange', resCookie);
-     document.getElementById('login').addEventListener('click', Login);
+     document.getElementById('login').addEventListener('click', () => Login());
      document.addEventListener('keyup', (event) => {
           if (event.key == 'Enter') Login();
      })
