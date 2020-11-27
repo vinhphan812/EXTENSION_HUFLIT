@@ -1,12 +1,10 @@
-const DOM = document.getElementById('DOM'); // div DOM data 
-const Menu = document.getElementById('menu'); // Menu user after Login
-const main = document.getElementById('main'); // div all element
-const inpUser = document.getElementById('user'); // input user
-const inpPass = document.getElementById('pass'); // input pass
+const DOM = $('#root'); // div DOM data 
+const Menu = $('#menu'); // Menu user after Login
+const main = $('#main'); // div all element
+const inpUser = $('#user'); // input user
+const inpPass = $('#pass'); // input pass
 const host = 'https://api-huflit-server.herokuapp.com/';
 
-
-var cookieAcept = false;
 var LoginUser, LoginPass; // variable user and pass for Login 
 var xhr = new XMLHttpRequest(); // create XHR request API
 
@@ -17,7 +15,7 @@ var xhr = new XMLHttpRequest(); // create XHR request API
 
 chrome.storage.local.get(['schedules', 'name'], function(res) {
      if (res.schedules && res.name) {
-          isDone(res.name)
+          isDone(res.name);
           renderSchedule(res.schedules);
      }
      getCookie();
@@ -47,12 +45,12 @@ function checkCookie(cookie) {
 
 //event readstatechange
 function resCookie() {
-     const msg = document.getElementById('msg');
+     const msg = $('#msg');
      // 4 <=> DONE
      if (this.readyState == 4) {
           var res = JSON.parse(this.responseText);
           if (res.isDone) {
-               cookieAcept = true;
+               Schedule();
                isDone(res.name);
           } else // if cookie expired --> get user and pass --> request Login with user and pass --> response cookie
                chrome.storage.local.get(['user', 'pass'], function(res) {
@@ -66,15 +64,15 @@ function resCookie() {
 
 //Login param is username, password 
 function Login(user, pass) {
-     const msg = document.getElementById('msg');
+     const msg = $('#msg');
      if (user && pass)
           xhr.removeEventListener('readystatechange', resCookie);
-     LoginUser = user || inpUser.value; //LoginUser is inputUser or local storage
-     LoginPass = pass || inpPass.value; // LoginPass is inputPass or local storage
+     LoginUser = user || inpUser.val(); //LoginUser is inputUser or local storage
+     LoginPass = pass || inpPass.val(); // LoginPass is inputPass or local storage
 
      if (msg) {
           isDisabled(true); // disabled input and button when variable is true
-          msg.innerText = "";
+          msg.text('');
      }
 
 
@@ -82,7 +80,7 @@ function Login(user, pass) {
      if (LoginUser == "" || LoginPass == "") // if LoginUser or PassUser are equal to "", formLogin is display
      {
           isDisabled(false); // not disable input and button when variable is false
-          msg.innerText = "Enter user or pass";
+          msg.text("Enter user or pass");
           return displayRender();
      }
 
@@ -96,10 +94,8 @@ function Login(user, pass) {
 function inputLogin() {
      displayRender();
      xhr.removeEventListener('readystatechange', resCookie);
-     document.getElementById('login').addEventListener('click', () => Login());
-     document.addEventListener('keyup', (event) => {
-          if (event.key == 'Enter') Login();
-     })
+     $('#login').click(Login);
+     $(document).on('keyup', (event) => event.key == 'Enter' ? Login() : null);
 }
 // remove username, password, cookie in storage local
 function logOut() {
@@ -118,13 +114,11 @@ function xhrRequest(uri, data) {
 }
 // save cookie, user, pass to storage local
 function DOMLogin(event) {
-     const msg = document.getElementById('msg');
+     const msg = $('#msg');
      if (this.readyState === 4) {
           var res = JSON.parse(this.responseText);
           if (res.isDone) // Login success, then save data user, pass, cookie
                chrome.storage.local.set({ cookie: res.cookie, user: LoginUser, pass: LoginPass, name: res.name }, () => {
-               DOM.innerHTML = '';
-               cookieAcept = true;
                Schedule();
                isDone(res.name);
           });
@@ -132,7 +126,8 @@ function DOMLogin(event) {
                //Login false: login again and messeger error
                displayRender();
                isDisabled(false);
-               msg.innerText = res.msg;
+               inpUser.focus();
+               msg.text(res.msg);
           }
      }
 }
@@ -141,10 +136,10 @@ function DOMLogin(event) {
 function isDisabled(flag) {
      inpUser.disabled = flag;
      inpPass.disabled = flag;
-     document.getElementById('login').disabled = flag;
+     $('#login').disabled = flag;
 }
 
 function displayRender() {
-     DOM.style.opacity = 1;
-     DOM.style.transform = 'translateY(0px)';
+     DOM.css('opacity', '1');
+     DOM.css('transform', 'translateY(0px)');
 }

@@ -17,18 +17,19 @@ const periodBoard = {
 }
 
 function renderSchedule(schedule) {
+     DOM.css('opacity', 0);
      const date = new Date();
      const today = date.getDay() + 1 == 1 ? 8 : date.getDay() + 1;
-
+     console.log(DOM.children().length);
      ///check main contain in #DOM
      // render main schedule as: list day of week and render data
-     if (!DOM.childElementCount || DOM.children[0].className != 'day') ScheduleMain();
+     if (!DOM.children().length || DOM.children()[0].className.indexOf('day') < 0) ScheduleMain();
 
      for (var i = 2; i <= 8; i++) {
-          var elThu = document.getElementById(i);
+          var elThu = $("#" + i);
           var dataDay = schedule.filter((item) => item.Thu.split(' ')[1] == i);
 
-          elThu.classList.add('thu');
+          elThu.addClass('thu');
 
           if (dataDay.length == 0)
                dataDay = today == i ? "<p class='textCenter'> Hôm nay rãnh rỗi quá nè...!</p>" : "<p class='textcenter'>Trống...!</p>";
@@ -38,22 +39,25 @@ function renderSchedule(schedule) {
                          parseInt(a.TietHoc.split('-')[0].trim()) - parseInt(b.TietHoc.split('-')[0].trim()));
                dataDay = dataDay.map(renderSubject);
           }
-          document.getElementById('t' + i).className = today == i ? 'on flex' : 'off';
-          document.getElementById('t' + i).innerHTML = typeof dataDay == 'object' ? dataDay.join('') : dataDay;
-          elThu.addEventListener('click', function(ev) {
+          $('#t' + i).attr('class', today == i ? 'on' : 'off');
+          $('#t' + i).html(typeof dataDay == 'object' ? dataDay.join('') : dataDay);
+          elThu.on('click', (e) => {
+               const id = e.currentTarget.id;
                for (var i = 2; i <= 8; i++) {
-                    if (this.id == i) {
-                         this.className += ' active';
-                         document.getElementById('t' + this.id).className = 'on flex';
+                    if (id == i) {
+                         e.currentTarget.classList.add('active');
+                         $('#t' + id).addClass('on').removeClass('off');
                     } else {
-                         document.getElementById('t' + i).className = 'off';
-                         document.getElementById(i).className = 'thu';
+                         // console.log($('#t' + i));
+                         $('#t' + i).attr('class', 'off');
+                         $('#' + i).addClass('thu');
+                         $('#' + i).removeClass('active')
                     }
                }
           });
      }
-     document.getElementById(today).textContent = "Hôm nay";
-     document.getElementById(today).className += ' active';
+     $('#' + today).text("Hôm nay");
+     $('#' + today).addClass('active');
 
      displayRender();
 }
@@ -63,27 +67,27 @@ function ScheduleMain() {
      var day = document.createElement('ul');
      var render = document.createElement('div');
 
-     DOM.innerHTML = '';
+     DOM.html('');
 
      render.classList.add('render');
      render.id = 'render';
      day.classList.add('day');
      day.classList.add('flex');
      day.classList.add('textCenter');
-     document.getElementById('DOM').appendChild(day); //DOM list day of week
-     document.getElementById('DOM').appendChild(render); // DOM render data
+     DOM.append(day); //DOM list day of week
+     DOM.append(render); // DOM render data
      for (var i = 2; i <= 8; i++) {
           //List Day Of week
           var el = document.createElement('li');
           el.classList.add('thu');
           el.id = i;
           el.textContent = dayOfWeek[i - 2];
-          document.getElementById('DOM').children[0].appendChild(el); // DOM item in day of week 
+          DOM.children()[0].append(el); // DOM item in day of week 
           //div dataDay
           var div = document.createElement('div');
           div.classList.add('off');
           div.id = 't' + i;
-          document.getElementById('render').appendChild(div); // DOM item render data
+          $('#render').append(div); // DOM item render data
      }
 }
 

@@ -2,38 +2,37 @@ var dataMenu = ['Schedules', 'Password', 'Logout'];
 
 // if done --> DOM data 
 function isDone(data) {
-     document.getElementById('box-title').className = 'flex row';
-     var liMenu = dataMenu.map(function(item) {
+     $('#box-title').addClass('row').removeClass('column');
+     const liMenu = dataMenu.map(function(item) {
           return '<li class="itemMenu" id="' +
                item + '"><img class="icon" src="assets/img/' +
                item + '.png"><span>' +
                item + '</span></li>';
      });
-
-     document.body.style.height = '500px';
+     $(document.body).css('height', '500px');
 
      //remove event xhr Login and check cookie 
-     document.removeEventListener('keyup', function(event) {
-          if (event.key == 'Enter') Login();
-     });
+     $(document).off('keyup', (event) => event.key == 'Enter' ? Login() : null);
 
      xhr.removeEventListener('readystatechange', resCookie);
      xhr.removeEventListener('readystatechange', DOMLogin);
 
 
-     //DOM username
-     Menu.innerHTML = '<div class="user flex"><img src="assets/img/user.png"><p>' +
+     // DOM username
+     Menu.html(
+          '<div class="user flex"><img src="assets/img/user.png"><p>' +
           data.split(' |')[1] +
           '</p></div><ul class="menu flex">' +
-          liMenu.join('') + '</ul>';
+          liMenu.join('') + '</ul>'
+          );
      //DOM menu list
-     document.getElementById('Schedules').addEventListener('click', Schedule);
-     document.getElementById('Password').addEventListener('click', ChangePassword);
-     document.getElementById('Logout').addEventListener('click', logOut);
+     $('#Schedules').click(Schedule);
+     $('#Password').click(ChangePassword);
+     $('#Logout').click(logOut);
 
      //transition css
      setTimeout(function() {
-          Menu.style.opacity = 1;
-          DOM.style.height = '300px';
+          Menu.css('opacity', 1);
+          DOM.css('height', '300px');
      }, 450);
 }

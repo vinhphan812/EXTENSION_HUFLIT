@@ -73,13 +73,13 @@
      margin: 10px;
 }
 
-#DOM {
+#root {
      display: flex;
      flex-direction: column;
      justify-content: center;
      transform: translateY(30px);
      opacity: 0;
-     transition: transform linear 450ms, opacity linear 600ms;
+     transition: transform linear 500ms, opacity linear 600ms;
 }
 
 #msg {

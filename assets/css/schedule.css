@@ -18,6 +18,7 @@
 }
 
 .on {
+     display: flex;
      justify-content: start;
      flex-direction: column;
 }
@@ -36,8 +37,7 @@
      color: #fff;
 }
 
-.render>.off,
-.render>.on {
+.render>div {
      position: absolute;
      height: 100%;
      width: 100%;

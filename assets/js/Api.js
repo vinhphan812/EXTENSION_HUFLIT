@@ -2,7 +2,7 @@
 /// + Schedule
 //// get cookie from storage local --> renderSchedule(response)
 function Schedule() {
-     DOM.style.opacity = 0;
+     DOM.css('opacity', 0);
      chrome.storage.local.get(['cookie'], function(res) {
           if (res.cookie) {
                data = 'cookie=' + res.cookie;
@@ -15,7 +15,7 @@ function Schedule() {
                xhrRequest('Schedules', data);
           } else {
                DOM.style.opacity = 1;
-               DOM.innerHTML = '<div class="errorText">ERROR:: Cookie null</div>';
+               DOM.html('<div class="errorText">ERROR:: Cookie null</div>');
           }
      });
 }
@@ -24,11 +24,11 @@ function Schedule() {
 //// DOM form enter new password --> transition css, add event checkbox check text <-> pass 
 //// key 'Enter' and click Update button call function Change
 function ChangePassword() {
-     DOM.style.opacity = 0;
-     DOM.style.transform = 'translateY(30px)';
+     DOM.css('opacity', 0);
+     DOM.css('transform', 'translateY(30px)');
 
      setTimeout(function() {
-          DOM.innerHTML = '<div class="form flex" id="form"><div class="box"><input type="password" id="pw1" required><label>Mật khẩu mới</label></div><input type="checkbox" id="check"><layer>hiển thị mật khẩu</layer></div><layer id="msg"></layer><button id="update">cập nhật</button>';
+          DOM.html('<div class="form flex" id="form"><div class="box"><input type="password" id="pw1" required><label>Mật khẩu mới</label></div><input type="checkbox" id="check"><layer>hiển thị mật khẩu</layer></div><layer id="msg"></layer><button id="update">cập nhật</button>');
 
           var update = document.getElementById('update');
           var check = document.getElementById('check');
@@ -49,21 +49,19 @@ function ChangePassword() {
 
 //get cookie and password old --> check new pass != old pass --> request API changePass
 function Change() {
-     msg.innerText = '';
-     if (cookieAcept)
-          chrome.storage.local.get(['cookie', 'pass'], function(res) {
-               if (pw1.value == '' || pw1.value == res.pass)
-                    msg.innerText = 'bạn chưa nhập mật khẩu mới...';
-               else {
-                    chrome.storage.local.set({ pass: pw1.value });
-                    var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
-                    xhr.addEventListener('readystatechange', function(event) {
-                         if (this.readyState == 4)
-                              DOM.innerHTML = '<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>';
-                    });
-                    xhrRequest('ChangePass', data);
-               }
-          });
-     else
-          msg.textContent = "await Loading";
+     const msg = $('#msg');
+     msg.html('');
+     chrome.storage.local.get(['cookie', 'pass'], function(res) {
+          if (pw1.value == '' || pw1.value == res.pass)
+               msg.text('bạn chưa nhập mật khẩu mới...');
+          else {
+               chrome.storage.local.set({ pass: pw1.value });
+               var data = 'cookie=' + res.cookie + '&oldPass=' + res.pass + '&newPass=' + pw1.value;
+               xhr.addEventListener('readystatechange', function(event) {
+                    if (this.readyState == 4)
+                         DOM.html('<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' + this.responseText + '</p></div>');
+               });
+               xhrRequest('ChangePass', data);
+          }
+     });
 }
