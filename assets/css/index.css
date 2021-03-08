@@ -1,152 +1,157 @@
 :root {
-     font-size: 20px;
-     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-     user-select: none;
+	font-size: 20px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	user-select: none;
 }
 
 @keyframes spin {
-     0% {
-          transform: rotate(0deg);
-     }
-     100% {
-          transform: rotate(360deg);
-     }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 body {
-     width: 400px;
-     height: 400px;
-     margin: auto;
-     transition: width linear 400ms, height linear 400ms;
+	width: 400px;
+	height: 400px;
+	margin: auto;
+	transition: width linear 400ms, height linear 400ms;
 }
 
 button {
-     display: block;
-     width: 100px;
-     height: 30px;
-     margin: 0 auto;
-     background-color: #23b9b9;
-     cursor: pointer;
-     color: #fff;
-     border: 0;
-     box-shadow: 0 0 5px 0 #23B9BA80;
+	display: block;
+	width: 100px;
+	height: 30px;
+	margin: 0 auto;
+	background-color: #23b9b9;
+	cursor: pointer;
+	color: #fff;
+	border: 0;
+	box-shadow: 0 0 5px 0 #23b9ba80;
+}
+
+button:focus {
+	outline: 0;
 }
 
 .flex {
-     display: flex;
-     transition: all linear 400ms;
+	display: flex;
+	transition: all linear 400ms;
 }
 
 .textCenter {
-     text-align: center;
+	text-align: center;
 }
 
 #loader {
-     align-items: center;
-     justify-content: center;
-     position: absolute;
-     top: 165px;
-     left: 165px;
-     width: 70px;
-     height: 70px;
-     background-color: #fbfbfb;
-     border-radius: 20px;
-     box-shadow: 0 0 10px 0 #333;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 165px;
+	left: 165px;
+	width: 70px;
+	height: 70px;
+	background-color: #fbfbfb;
+	border-radius: 20px;
+	box-shadow: 0 0 10px 0 #333;
 }
 
 #loader img {
-     width: 50px;
-     height: 50px;
-     animation: spin 2s linear infinite;
+	width: 50px;
+	height: 50px;
+	animation: spin 2s linear infinite;
 }
 
 .logo {
-     width: 216px;
-     height: 145px;
-     transition: all linear 400ms;
+	width: 216px;
+	height: 145px;
+	transition: all linear 400ms;
 }
 
 .title {
-     font-size: 35px;
-     text-align: center;
-     font-weight: bold;
-     border-bottom: 1px solid #ccc;
-     color: #373F51;
-     transition: all linear 400ms;
+	font-size: 35px;
+	text-align: center;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	color: #373f51;
+	transition: all linear 400ms;
 }
 
 .login-box {
-     width: 200px;
-     margin: 0 auto;
+	width: 200px;
+	margin: 0 auto;
 }
 
 .box {
-     position: relative;
-     margin: 15px 0;
+	position: relative;
+	margin: 15px 0;
 }
 
 .box input {
-     padding: 10px 0 5px 0;
-     width: 100%;
-     font-size: 16px;
-     color: #000;
-     border: none;
-     border-bottom: 1px solid #000;
-     outline: none;
-     background: transparent;
-     transition: border linear 400ms;
+	padding: 10px 0 5px 0;
+	width: 100%;
+	font-size: 16px;
+	color: #000;
+	border: none;
+	border-bottom: 1px solid #000;
+	outline: none;
+	background: transparent;
+	transition: border linear 400ms;
 }
 
 .box label {
-     position: absolute;
-     top: 0;
-     left: 0;
-     padding: 10px 0;
-     color: #000;
-     pointer-events: none;
-     transition: .5s;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px 0;
+	color: #000;
+	pointer-events: none;
+	transition: 0.5s;
 }
 
-.box input:focus~label,
-.box input:valid~label,
-.box input:disabled~label {
-     top: -25px;
-     left: 0;
-     color: #4bb5a6;
-     font-size: 12px;
+.box input:focus ~ label,
+.box input:valid ~ label,
+.box input:disabled ~ label {
+	top: -25px;
+	left: 0;
+	color: #4bb5a6;
+	font-size: 12px;
 }
 
 .box input:focus,
 .box input:valid,
 .box input:disabled {
-     border-bottom: 1px solid #369084;
+	border-bottom: 1px solid #369084;
 }
 
 .column {
-     flex-direction: column;
-     align-items: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .row {
-     flex-direction: column;
-     height: 75px;
-     align-items: center;
-     margin: 5px;
+	flex-direction: column;
+	height: 75px;
+	align-items: center;
+	margin: 5px;
 }
 
 .row a {
-     width: 108px;
-     height: 72.5px;
-     transform: translateX(-140px);
+	width: 108px;
+	height: 72.5px;
+	transform: translateX(-140px);
 }
 
-.row>a>img {
-     width: 100%;
-     height: 100%;
+.row > a > img {
+	width: 100%;
+	height: 100%;
 }
 
 .row div {
-     font-size: 25px;
-     border: 0;
-     transform: translate(55px, -55px);
+	font-size: 25px;
+	border: 0;
+	transform: translate(55px, -55px);
 }
