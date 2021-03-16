@@ -1,8 +1,8 @@
 // enble/disable to Input, Button Login
-function isDisabled(flag) {
-	inpUser.disabled = flag;
-	inpPass.disabled = flag;
-	$("#login").disabled = flag;
+function isDisabledInput(flag) {
+	inpUser.prop("disabled", flag);
+	inpPass.prop("disabled", flag);
+	$("#login").prop("disabled", flag);
 }
 
 //display input username and password
@@ -16,8 +16,12 @@ function displayInputLogin() {
 }
 
 function fadeUp(el = DOM) {
-	el.css("opacity", 0);
+	fade();
 	el.css("transform", "translateY(30px)");
+}
+
+function fade(el = DOM) {
+	el.css("opacity", 0);
 }
 
 function displayRender(el = DOM) {
@@ -27,6 +31,7 @@ function displayRender(el = DOM) {
 
 //? Animation logo and text content HUFLIT EXTENSION
 function loginSuccess() {
+	fade();
 	$("#box-title").addClass("row").removeClass("column");
 	$(document.body).css("height", "500px").off();
 }

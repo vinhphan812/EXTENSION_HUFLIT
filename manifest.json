@@ -13,7 +13,7 @@
 	"permissions": ["https://api-huflit.herokuapp.com/*", "storage"],
 	"background": {
 		"scripts": ["/assets/background/background.js"],
-		"persistent": false
+		"persistent": true
 	},
 	"browser_action": {
 		"default_popup": "popup.html"

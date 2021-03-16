@@ -10,13 +10,32 @@ const DOM = $("#root"),
 const dataKey = ["user", "pass", "cookie", "schedule", "name"];
 
 const error = (errorText) =>
-		DOM.html(`<div class="errorText">${errorText}</div>`),
+		DOM.html(tag("div", errorText, { class: "errorText" })),
 	readyState = (res) => res.readyState === 4 && res.status === 200;
+
+function formData(data = {}) {
+	var form = [];
+	for (var key in data) form.push(`${key}=${data[key]}`);
+
+	return form.join("&");
+}
 
 function getDataFormStorage(key) {
 	return new Promise(async function (resolve, reject) {
 		chrome.storage.local.get(key, (res) => resolve(res));
 	});
+}
+function tag(tag, text, data = {}) {
+	var s = "";
+	if (data)
+		for (var key in data) {
+			const dt = data[key],
+				val = typeof dt == "object" ? dt.join(" ") : dt;
+
+			s += `${key}="${val}" `;
+		}
+
+	return `<${tag} ${s}>${text}</${tag}>`;
 }
 
 const LoginControl = async function (res) {
@@ -32,7 +51,10 @@ const LoginControl = async function (res) {
 		if (readyState(this)) {
 			const data = JSON.parse(this.responseText);
 
-			if (!data.success) return $("#msg").text(data.msg);
+			if (!data.success) {
+				isDisabledInput(false);
+				return $("#msg").text(data.msg);
+			}
 
 			Tab.HOME(data.name);
 			api.info.cookie = data.cookie;
@@ -46,6 +68,7 @@ const LoginControl = async function (res) {
 			const data = JSON.parse(this.responseText);
 			if (!data.success) return alert("Please Login Again!!!");
 			renderSchedule(data.schedule);
+			displayRender();
 			api.info.schedule = data.schedule;
 			api.saveInfo();
 		}
@@ -53,9 +76,14 @@ const LoginControl = async function (res) {
 	callbackChangePass = function (event) {
 		if (this.readyState == 4)
 			DOM.html(
-				'<div class="successText"><img src="./assets/img/tick.png" style="margin: 10px;"><p>' +
-					this.responseText +
-					"</p></div>"
+				tag(
+					"div",
+					tag("img", "", {
+						src: "./assets/img/tick.png",
+						style: "margin: 100px",
+					}) + tag("p", this.responseText),
+					{ class: "successText" }
+				)
 			);
 	},
 	checkLogin = function () {
@@ -63,6 +91,7 @@ const LoginControl = async function (res) {
 		msg.text("");
 		if (!inpUser.val() || !inpPass.val())
 			return msg.text("Please enter user or pass !");
+		isDisabledInput(true);
 		api.setAccount(inpUser.val(), inpPass.val()) &
 			api.login(callbackLogin);
 	},

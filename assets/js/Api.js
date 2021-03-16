@@ -17,22 +17,23 @@ class Tab {
 
 	static HOME(data) {
 		//? animation LOGO
+		fade();
 		loginSuccess();
 
 		//? DOM username
 		Menu.html(
-			`<div class="user flex">
-                    <img src="assets/img/user.png">
-                    ${textTag("p", data.split(" |")[1])}
-               </div>
-               <ul class="menu flex">
-			     ${menuEl(this.menu)}
-		     </ul>`
+			tag(
+				"div",
+				tag("img", "", { src: "/assets/img/user.png" }) +
+					tag("p", data.split(" |")[1]),
+				{
+					class: ["user", "flex"],
+				}
+			) + tag("ul", menuEl(this.menu), { class: ["menu", "flex"] })
 		);
 
 		//? DOM menu list
 		$("#Schedules").click(scheduleHandle);
-		// $("#Password").click(renderChangePass);
 		$("#Password").click(changePassHandle);
 		$("#Logout").click(logOut);
 
@@ -42,16 +43,16 @@ class Tab {
 		function menuEl(data) {
 			return data
 				.map(function (item) {
-					return `<li class="itemMenu" id="${item}">
-                                   <img class="icon" src="assets/img/${item}.png">
-                                   ${textTag("span", item)}
-                              </li>`;
+					return tag(
+						"li",
+						tag("img", "", {
+							class: "icon",
+							src: `assets/img/${item}.png`,
+						}) + tag("span", item),
+						{ class: "itemMenu", id: item }
+					);
 				})
 				.join("");
-		}
-
-		function textTag(tag, text) {
-			return `<${tag}>${text}</${tag}>`;
 		}
 	}
 }
@@ -104,7 +105,7 @@ class API {
 	login(callback) {
 		if (!this.info.user || !this.info.pass) return displayInputLogin();
 
-		const data = `user=${this.info.user}&pass=${this.info.pass}`;
+		const data = formData({ user: this.info.user, pass: this.info.pass });
 		this.requestServer("login", data, callback);
 	}
 
@@ -112,21 +113,25 @@ class API {
 		return new Promise(async (resolve, reject) => {
 			if (!this.info.cookie) return this.login(callbackLogin);
 
-			const data = "cookie=" + this.info.cookie;
+			const data = formData({ cookie: this.info.cookie });
 			this.requestServer("checkCookie", data, callback);
 		});
 	}
 
 	getSchedule(callback) {
 		return new Promise(async (resolve, reject) => {
-			const data = "cookie=" + this.info.cookie;
+			const data = formData({ cookie: this.info.cookie });
 			this.requestServer("GetSchedule", data, callback);
 		});
 	}
 
 	ChangePassRequest(newPassword, callback) {
 		return new Promise(async (resolve, reject) => {
-			const data = `cookie=${this.info.cookie}&oldPass=${this.info.pass}&newPass=${newPassword}`;
+			const data = formData({
+				cookie: this.info.cookie,
+				oldPass: this.info.oldPass,
+				newPass: newPassword,
+			});
 			this.requestServer("ChangePass", data, callback);
 		});
 	}

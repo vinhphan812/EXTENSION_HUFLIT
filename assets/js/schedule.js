@@ -23,7 +23,8 @@ const periodBoard = {
 		"Thứ 6",
 		"Thứ 7",
 		"Chủ nhật",
-	];
+	],
+	content = ["Nay rảnh nè đi coffee hong...!", "Trống...!"];
 
 function renderSchedule(schedule) {
 	DOM.css("opacity", 0);
@@ -31,8 +32,8 @@ function renderSchedule(schedule) {
 	const date = new Date(),
 		toDay = date.getDay() == 0 ? 8 : date.getDay() + 1;
 
-	// check main contain in #DOM
-	// render main schedule as: list day of week and render data
+	//? check main contain in #DOM
+	//? render main schedule as: list day of week and render data
 
 	isMain() && ScheduleMain();
 
@@ -42,12 +43,13 @@ function renderSchedule(schedule) {
 
 		elThu.addClass("thu");
 
-		if (dataDay.length == 0) dataDay = Empty(toDay, i);
-		else dataDay = dataDay.sort(sortSubject).map(renderSubject);
-		// dataDay.length > 1 ? dataDay.sort(sortSubject) : dataDay;
+		dataDay = !dataDay.length
+			? Empty(toDay, i)
+			: dataDay.sort(sortSubject).map(renderSubject).join("");
+
 		$("#t" + i)
 			.attr("class", toDay == i ? "on" : "off")
-			.html(typeof dataDay == "object" ? dataDay.join("") : dataDay);
+			.html(dataDay);
 
 		elThu.click(handleClick);
 	}
@@ -59,53 +61,42 @@ function renderSchedule(schedule) {
 }
 
 function ScheduleMain() {
-	var day = document.createElement("ul"),
-		render = document.createElement("div");
+	var day = tag("ul", "", { class: ["day", "flex", "textCenter"] }),
+		render = tag("div", "", { id: "render", class: "render" });
 
-	DOM.html("");
-	//Add id for render component
-	render.id = "render";
-	//Add Class for render and day Componet
-	render.classList.add("render");
-	day.classList.add("day");
-	day.classList.add("flex");
-	day.classList.add("textCenter");
-	// Add day and render to DOM
-	DOM.append(day).append(render);
+	DOM.html("").append(day).append(render);
 	//DOM list day of week and block render data
 	for (var i = 2; i <= 8; i++) renderMain(i);
 }
 
-function renderDay() {}
-
 function renderMain(i) {
-	var el = document.createElement("li");
-	el.classList.add("thu");
-	el.id = i;
-	el.textContent = dayOfWeek[i - 2];
+	const div = tag("div", "", { class: "off", id: "t" + i }),
+		li = tag("li", dayOfWeek[i - 2], { class: "thu", id: i });
 
-	DOM.children()[0].append(el); // DOM item in day of week
-	//div Subject in Day
-	var div = document.createElement("div");
-	div.classList.add("off");
-	div.id = "t" + i;
+	$(DOM.children()[0]).append(li);
+
 	$("#render").append(div);
 }
 
 function renderSubject(item) {
-	return (
-		'<div class="subject flex"><div class="tiet textCenter"><span>' +
-		startLession(item.TietHoc) +
-		"</span><span>" +
-		endLession(item.TietHoc) +
-		"</span></div><div class='info flex'><span class='mon'>" +
-		item.MonHoc +
-		'</span><span class="giaovien">' +
-		item.GiaoVien +
-		'</span></div><span class="phong textCenter">' +
-		item.Phong +
-		"</span></div>"
-	);
+	const s = startLession(item.TietHoc),
+		e = endLession(item.TietHoc),
+		m = item.MonHoc,
+		g = item.GiaoVien,
+		p = item.Phong,
+		t = "span";
+
+	return `<div class="subject flex">
+			<div class="tiet textCenter">
+				${tag(t, s)}
+				${tag(t, e)}
+			</div>
+			<div class='info flex'>
+				${tag(t, m, { class: "mon" })}
+				${tag(t, g, { class: "giaovien" })}
+			</div>
+			${tag(t, p, { class: ["phong", "textCenter"] })}
+		</div>`;
 }
 
 const startLession = (time) => periodBoard[time.split("-")[0]].start,
@@ -113,23 +104,21 @@ const startLession = (time) => periodBoard[time.split("-")[0]].start,
 	parseLession = (item) => item.TietHoc.split("-")[0].trim(),
 	sortSubject = (a, b) => parseLession(a) - parseLession(b),
 	handleClick = (e) => {
-		const id = e.currentTarget.id;
-		for (var i = 2; i <= 8; i++) {
-			if (id == i) {
-				e.currentTarget.classList.add("active");
-				$("#t" + id)
-					.addClass("on")
-					.removeClass("off");
-			} else {
-				$("#t" + i).attr("class", "off");
-				$("#" + i)
-					.addClass("thu")
-					.removeClass("active");
-			}
-		}
+		const id = e.currentTarget.id,
+			ac = $(".active"),
+			currentId = ac.attr("id");
+		ac.removeClass("active");
+		$("#" + id).addClass("active");
+		$("#t" + currentId)
+			.removeClass("on")
+			.addClass("off");
+		$("#t" + id)
+			.removeClass("off")
+			.addClass("on");
 	},
 	isMain = () => !DOM.children().length || !DOM.children().hasClass("day"),
-	Empty = (toDay, i) =>
-		toDay == i
-			? "<p class='textCenter'> Nay rảnh nè đi coffee hong...!</p>"
-			: "<p class='textcenter'>Trống...!</p>";
+	Empty = (toDay, i) => {
+		return tag("p", content[toDay - i == 0 ? 0 : 1], {
+			class: "textCenter",
+		});
+	};
