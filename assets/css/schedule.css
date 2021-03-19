@@ -12,8 +12,8 @@
 	line-height: 30px;
 	flex-grow: 1;
 	cursor: pointer;
-	color: #2db8ae;
-	border: 1px solid #2db8ae;
+	color: var(--primary-color);
+	border: 1px solid var(--primary-color);
 	transition: background-color linear 250ms, color linear 250ms;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .active {
-	background-color: #2db8ae;
+	background-color: var(--primary-color);
 	color: #fff;
 }
 
@@ -53,13 +53,13 @@
 	margin: auto;
 	font-size: 30px;
 	font-weight: bolder;
-	color: #2db8ae90;
+	color: var(--primary-color) 90;
 }
 
 .subject {
 	align-items: center;
 	height: 50px;
-	background-color: #2db8ae;
+	background-color: var(--primary-color);
 	color: #fff;
 	margin: 0 10px 0 10px;
 	border-bottom: 1px solid #d3d3d3;
@@ -67,7 +67,7 @@
 }
 
 .subject:hover {
-	background-color: #239088;
+	background-color: var(--secondary-color);
 	transform: translateX(5px);
 }
 

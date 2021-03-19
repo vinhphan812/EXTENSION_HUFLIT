@@ -1,19 +1,9 @@
 /**
  * ? MODULE API: getSchedule, ChangePassword, Logout.
  */
-function Change() {
-	const msg = $("#msg");
-	msg.html("");
-	if (pw1.value == "" || pw1.value == api.info.pass)
-		msg.text("bạn chưa nhập mật khẩu mới...");
-	else {
-		api.ChangePassRequest(pw1.value);
-	}
-}
 
 class Tab {
-	static menu = ["Schedules", "Password", "Logout"];
-	constructor() {}
+	static menu = ["Schedules", "Transcript", "Password", "Logout"];
 
 	static HOME(data) {
 		//? animation LOGO
@@ -24,17 +14,17 @@ class Tab {
 		Menu.html(
 			tag(
 				"div",
-				tag("img", "", { src: "/assets/img/user.png" }) +
-					tag("p", data.split(" |")[1]),
 				{
 					class: ["user", "flex"],
-				}
-			) + tag("ul", menuEl(this.menu), { class: ["menu", "flex"] })
+				},
+				tag("img", { src: "/assets/img/user.png" }) +
+					tag("p", {}, data.split(" |")[1])
+			) + tag("ul", { class: ["menu", "flex"] }, menuEl(this.menu))
 		);
 
 		//? DOM menu list
 		$("#Schedules").click(scheduleHandle);
-		$("#Password").click(changePassHandle);
+		$("#Password").click(changePassRenderHandle);
 		$("#Logout").click(logOut);
 
 		//transition css
@@ -45,11 +35,11 @@ class Tab {
 				.map(function (item) {
 					return tag(
 						"li",
-						tag("img", "", {
+						{ class: "itemMenu", id: item },
+						tag("img", {
 							class: "icon",
 							src: `assets/img/${item}.png`,
-						}) + tag("span", item),
-						{ class: "itemMenu", id: item }
+						}) + tag("span", {}, item)
 					);
 				})
 				.join("");
