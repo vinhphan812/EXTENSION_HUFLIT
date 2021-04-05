@@ -34,7 +34,7 @@ const dataKey = ["user", "pass", "cookie", "schedule", "name"],
 		"Thứ 7",
 		"Chủ nhật",
 	],
-	content = ["Nay rảnh nè đi coffee hong...!", "Trống...!"];
+	content = ["Hôm nay bạn rảnh...!", "Trống...!"];
 
 const error = (errorText) =>
 		DOM.html(tag("div", errorText, { class: "errorText" })),

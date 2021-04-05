@@ -1,5 +1,7 @@
 {
 	"name": "Huflit Extension",
+	"version": "0.1",
+	"manifest_version": 2,
 	"icons": {
 		"16": "assets/img/huflit.png",
 		"32": "assets/img/huflit.png",
@@ -8,8 +10,6 @@
 		"128": "assets/img/huflit.png"
 	},
 	"description": "Schedule and Change Pass for portal.huflit.edu.vn",
-	"version": "0.1",
-	"manifest_version": 2,
 	"permissions": ["https://api-huflit.herokuapp.com/*", "storage"],
 	"background": {
 		"scripts": ["/assets/background/background.js"],
