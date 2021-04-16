@@ -9,14 +9,21 @@
 		"64": "assets/img/huflit.png",
 		"128": "assets/img/huflit.png"
 	},
-	"description": "Schedule and Change Pass for portal.huflit.edu.vn",
-	"permissions": ["https://api-huflit.herokuapp.com/*", "storage"],
+	"description": "Extension schedule, show mark and auto survey teacher.",
+	"permissions": [
+		"https://api-huflit.herokuapp.com/*",
+		"https://portal.huflit.edu.vn/",
+		"storage",
+		"cookies",
+		"tabs",
+		"notifications"
+	],
 	"background": {
 		"scripts": ["/assets/background/background.js"],
 		"persistent": true
 	},
 	"browser_action": {
-		"default_popup": "popup.html"
-	},
-	"content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'"
+		"default_popup": "popup.html",
+		"default_icon": "assets/img/huflit.png"
+	}
 }

@@ -8,11 +8,10 @@
 
 #menu {
 	opacity: 0;
-	position: fixed;
+	position: absolute;
 	width: 100%;
 	bottom: 0;
 	transition: opacity linear 600ms;
-	z-index: 2;
 }
 
 .itemMenu {
@@ -21,7 +20,7 @@
 	text-align: center;
 	flex-grow: 1;
 	cursor: pointer;
-	background-color: #37c5ba;
+	background-color: var(--primary-color);
 	color: #d8dbe9bf;
 }
 
@@ -31,7 +30,7 @@
 }
 
 .itemMenu:hover {
-	background-color: #22aaa1;
+	background-color: var(--secondary-color);
 }
 
 .itemMenu:hover span {
@@ -92,21 +91,18 @@
 	transition: all 400ms;
 }
 
-.errorText {
+.text {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #e00022;
 	font-weight: 700;
 	height: 100%;
 }
 
-.successText {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+.error {
+	color: #e00022;
+}
+
+.success {
 	color: #1e7900;
-	align-items: center;
-	height: 100%;
-	font-weight: bold;
 }

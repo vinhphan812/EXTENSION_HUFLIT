@@ -32,10 +32,24 @@ function displayRender(el = DOM) {
 //? Animation logo and text content HUFLIT EXTENSION
 function loginSuccess() {
 	fade();
+	if ($("#login-box").length) DOM.html("");
 	$("#box-title").addClass("row").removeClass("column");
 	$(document.body).css("height", "500px").off();
 }
 function doneHome() {
 	Menu.css("opacity", 1);
 	DOM.css("height", "300px");
+}
+$(".modal-bg").click(displayModal);
+$(".modal-close").click(displayModal);
+
+function displayModal() {
+	$(".modal-bg").toggle();
+	$(".modal-box").fadeToggle("low", "linear");
+}
+
+function setContentModal(title, content) {
+	$(".modal-title").html(title);
+	$(".modal-content").html(content);
+	displayModal();
 }

@@ -7,23 +7,25 @@ const DOM = $("#root"),
 	inpUser = $("#user"),
 	inpPass = $("#pass");
 
-const dataKey = ["user", "pass", "cookie", "schedule", "name"],
-	periodBoard = {
-		1: { start: "6h45", end: "7h35" },
-		2: { start: "7h35", end: "8h25" },
-		3: { start: "8h25", end: "9h15" },
-		4: { start: "9h30", end: "10h20" },
-		5: { start: "10h20", end: "11h10" },
-		6: { start: "11h10", end: "12h00" },
-		7: { start: "12h45", end: "13h35" },
-		8: { start: "13h35", end: "14h25" },
-		9: { start: "14h25", end: "15h15" },
-		10: { start: "15h30", end: "16h20" },
-		11: { start: "16h20", end: "17h10" },
-		12: { start: "17h10", end: "18h15" },
-		13: { start: "18h15", end: "19h05" },
-		14: { start: "19h05", end: "19h55" },
-		15: { start: "19h55", end: "20h45" },
+const dataKey = ["user", "pass", "cookie", "schedule", "name", "studyProgram"],
+	time = {
+		1: { s: "6h45", e: "7h35" },
+		2: { s: "7h35", e: "8h25" },
+		3: { s: "8h25", e: "9h15" },
+		4: { s: "9h30", e: "10h20" },
+		5: { s: "10h20", e: "11h10" },
+		6: { s: "11h10", e: "12h00" },
+		7: { s: "12h45", e: "13h35" },
+		8: { s: "13h35", e: "14h25" },
+		9: { s: "14h25", e: "15h15" },
+		10: { s: "15h30", e: "16h20" },
+		11: { s: "16h20", e: "17h10" },
+		12: { s: "17h10", e: "18h15" },
+		13: { s: "18h15", e: "19h05" },
+		14: { s: "19h05", e: "19h55" },
+		15: { s: "19h55", e: "20h45" },
+		start: (t) => time[t].s,
+		end: (t) => time[t].e,
 	},
 	dayOfWeek = [
 		"Thứ 2",
@@ -37,13 +39,20 @@ const dataKey = ["user", "pass", "cookie", "schedule", "name"],
 	content = ["Hôm nay bạn rảnh...!", "Trống...!"];
 
 const error = (errorText) =>
-		DOM.html(tag("div", errorText, { class: "errorText" })),
+		DOM.html(
+			tag("div", { class: ["text", "error"] }, errorText) +
+				tag("button", {}, "Thử Lại")
+		),
+	successText = (t) =>
+		DOM.html(
+			tag("div", { class: ["text", "success"] }, t) +
+				tag("button", {}, "Quay Lại")
+		),
 	readyState = (res) => res.readyState === 4 && res.status === 200;
 
 function formData(data = {}) {
 	var form = [];
 	for (var key in data) form.push(`${key}=${data[key]}`);
-
 	return form.join("&");
 }
 
@@ -52,56 +61,57 @@ function getDataFormStorage(key) {
 		chrome.storage.local.get(key, (res) => resolve(res));
 	});
 }
-function tag(tag, data = {}, text = 1) {
-	var s = "";
+function tag(tag, data = {}, text = false) {
+	const typeData = (dt) => typeof dt === "boolean";
+	var s = [];
 	if (data)
 		for (var key in data) {
 			const dt = data[key],
 				val = typeof dt == "object" ? dt.join(" ") : dt;
-			s +=
-				typeof dt === "boolean"
-					? dt
-						? key
-						: ""
-					: `${key}="${val}" `;
+			s.push(typeData(dt) ? (dt ? key : "") : `${key}="${val}"`);
 		}
-
-	return text == 1 ? `<${tag} ${s} />` : `<${tag} ${s}>${text}</${tag}>`;
+	text = typeof text == "object" ? text.join("") : text;
+	var s = s.join(" ");
+	return !text ? `<${tag} ${s} />` : `<${tag} ${s}>${text}</${tag}>`;
 }
 
 const LoginControl = async function (res) {
 		if (readyState(this)) {
 			const data = JSON.parse(this.responseText);
 
-			data.success
-				? Tab.HOME(data.name) & api.getSchedule(callbackSchedule)
-				: api.login(callbackLogin);
+			if (!data.success) tab.api.login(callbackLogin);
+			else tab.HOME(data.name) & tab.api.getSchedule(callbackSchedule);
 		}
 	},
-	callbackLogin = function () {
+	callbackLogin = async function () {
 		if (readyState(this)) {
 			const data = JSON.parse(this.responseText);
 
 			if (!data.success) {
+				if (tab.api.info) {
+					chrome.storage.local.remove(dataKey);
+					window.location.href = "popup.html";
+				}
 				isDisabledInput(false);
 				return $("#msg").text(data.msg);
 			}
 
-			Tab.HOME(data.name);
-			api.info.cookie = data.cookie;
-			api.info.name = data.name;
-			api.getSchedule(callbackSchedule);
-			api.saveInfo();
+			tab.HOME(data.name);
+			tab.api.info.cookie = data.cookie;
+			tab.api.info.name = data.name;
+			tab.api.saveInfo();
+			tab.api.getSchedule(callbackSchedule);
 		}
 	},
 	callbackSchedule = function () {
 		if (readyState(this)) {
 			const data = JSON.parse(this.responseText);
 			if (!data.success) return alert("Please Login Again!!!");
+			fade();
 			renderSchedule(data.schedule);
 			displayRender();
-			api.info.schedule = data.schedule;
-			api.saveInfo();
+			tab.api.info.schedule = data.schedule;
+			tab.api.saveInfo();
 		}
 	},
 	callbackChangePass = function (event) {
@@ -123,15 +133,10 @@ const LoginControl = async function (res) {
 		if (!inpUser.val() || !inpPass.val())
 			return msg.text("Please enter user or pass !");
 		isDisabledInput(true);
-		api.setAccount(inpUser.val(), inpPass.val()) &
-			api.login(callbackLogin);
+		tab.api.setAccount(inpUser.val(), inpPass.val()) &
+			tab.api.login(callbackLogin);
 	},
-	logOut = () => {
-		chrome.storage.local.remove(dataKey);
-		window.location.href = "popup.html";
-	},
-	scheduleHandle = () =>
-		DOM.css("opacity", 0) & api.getSchedule(callbackSchedule),
+	scheduleHandle = () => tab.api.getSchedule(callbackSchedule),
 	changePassRenderHandle = function () {
 		// form change password
 		fadeUp();
@@ -175,13 +180,4 @@ const LoginControl = async function (res) {
 			$("#change").click(changePassHandleClick);
 			displayRender();
 		}, 1000);
-	},
-	changePassHandleClick = () => {
-		const msg = $("#msg");
-		msg.html("");
-		if (pw1.value == "" || pw1.value == api.info.pass)
-			msg.text("bạn chưa nhập mật khẩu mới...");
-		else {
-			api.ChangePassRequest(pw1.value);
-		}
 	};

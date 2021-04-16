@@ -25,6 +25,7 @@ function renderSchedule(schedule) {
 
 		elThu.click(handleClick);
 	}
+	$("li.active").removeClass("active");
 	$("#" + toDay)
 		.text("Hôm nay")
 		.addClass("active");
@@ -51,13 +52,13 @@ function renderMain(i) {
 }
 
 function renderSubject(item) {
-	const s = startLession(item.TietHoc),
-		e = endLession(item.TietHoc),
+	const ti = item.TietHoc.split("-"),
+		s = time.start(ti[0]),
+		e = time.end(ti[1]),
 		m = item.MonHoc,
 		g = item.GiaoVien,
 		p = item.Phong,
 		t = "span";
-
 	return `<div class="subject flex">
 			<div class="tiet textCenter">
 				${tag(t, {}, s)}
@@ -70,10 +71,7 @@ function renderSubject(item) {
 			${tag(t, { class: ["phong", "textCenter"] }, p)}
 		</div>`;
 }
-
-const startLession = (time) => periodBoard[time.split("-")[0]].start,
-	endLession = (time) => periodBoard[time.split("-")[1]].end,
-	parseLession = (item) => item.TietHoc.split("-")[0].trim(),
+const parseLession = (item) => item.TietHoc.split("-")[0].trim(),
 	sortSubject = (a, b) => parseLession(a) - parseLession(b),
 	handleClick = (e) => {
 		const id = e.currentTarget.id,

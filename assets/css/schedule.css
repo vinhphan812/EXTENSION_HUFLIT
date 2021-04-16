@@ -53,6 +53,7 @@
 	margin: auto;
 	font-size: 30px;
 	font-weight: bolder;
+	opacity: 0.5;
 	color: var(--primary-color);
 }
 
@@ -64,9 +65,11 @@
 	margin: 0 10px 0 10px;
 	border-bottom: 1px solid #d3d3d3;
 	cursor: default;
+	position: relative;
+	justify-content: center;
 }
 
-.subject:hover {
+.subject:not(.fail):not(.pass):hover {
 	background-color: var(--secondary-color);
 	transform: translateX(5px);
 }
@@ -74,12 +77,44 @@
 .subject:hover .info {
 	transform: translateX(5px);
 }
+.fail {
+	background-color: #9b1515;
+}
+
+.fail:hover {
+	background-color: #771010;
+}
+
+.pass {
+	background-color: #0d922b;
+}
+.pass:hover {
+	background-color: #06751e;
+}
+
+.subject > .header > .survey {
+	background-color: #eee !important;
+	color: var(--primary-color) !important;
+	width: 90px;
+	z-index: 3;
+}
 
 .tiet {
 	display: flex;
 	flex-direction: column;
 	font-size: 15px;
 	margin: 0 5px;
+}
+.score {
+	width: 40px;
+	text-align: center;
+}
+.credits {
+	width: 30px;
+	display: flex;
+	flex-direction: column;
+	/* border-right: 1px solid #eee;
+	border-left: 1px solid #eee; */
 }
 
 .tiet,
@@ -94,14 +129,109 @@
 .info {
 	flex-direction: column;
 	flex-grow: 1;
-	margin: 0 10px;
 }
 
-.info > .mon {
+.info .mon {
 	font-size: 18px;
-	font-weight: 400;
+	font-weight: 600;
 }
 
 .info > .giaovien {
 	color: #efefef;
+}
+
+.subject > .header {
+	width: 90%;
+	z-index: 2;
+}
+
+.subject > .detail {
+	width: 64.5%;
+	font-weight: 400;
+	color: #eeee;
+	z-index: 2;
+	text-shadow: 0 0 #bbb7;
+	/* display: flex;
+	justify-content: center; */
+}
+
+.subject > .detail > div {
+	display: flex;
+	justify-content: space-between;
+	padding: 2px;
+}
+
+.subject.fail,
+.subject.pass {
+	height: auto;
+	margin: 2px 10px;
+}
+
+.subject > .bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 52px;
+	font-weight: bold;
+	color: #00000026;
+	letter-spacing: 15px;
+	text-transform: uppercase;
+}
+
+.subject.pass > .bg::after {
+	content: "pass";
+}
+
+.subject.fail > .bg::after {
+	content: "fail";
+}
+
+#root > .total {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+@keyframes load {
+	from {
+		opacity: 0.5;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.subject.fail > .detail > .loading,
+.subject.pass > .detail > .loading {
+	height: 70px;
+	width: 50%;
+	align-items: center;
+	position: relative;
+	padding: 0;
+	margin: auto;
+}
+
+.detail > .loading > .bg-loading {
+	height: 5px;
+	text-align: center;
+	width: 100%;
+	border-radius: 10px;
+	background-color: #ffffffb8;
+	color: #333;
+}
+
+.subject.fail > .detail > .loading > .task,
+.subject.pass > .detail > .loading > .task {
+	background-color: #fff;
+	height: 5px;
+	position: absolute;
+	transition: all 500ms linear;
+	width: 1%;
+	border-radius: 10px;
+	text-align: center;
+	border: 1px solid #555;
 }
