@@ -20,7 +20,7 @@
 	],
 	"background": {
 		"scripts": ["/assets/background/background.js"],
-		"persistent": true
+		"persistent": false
 	},
 	"browser_action": {
 		"default_popup": "popup.html",
